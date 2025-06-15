@@ -9,13 +9,14 @@ import CosmicLoader from './CosmicLoader';
 
 interface DynamicBlueprintResultsProps {
   questionnaireData: QuestionnaireData;
+  apiKey: string;
   onBack: () => void;
 }
 
-const DynamicBlueprintResults = ({ questionnaireData, onBack }: DynamicBlueprintResultsProps) => {
+const DynamicBlueprintResults = ({ questionnaireData, apiKey, onBack }: DynamicBlueprintResultsProps) => {
   const { data: blueprint, isLoading, isError, error } = useQuery<Blueprint, Error>({
     queryKey: ['blueprint', questionnaireData],
-    queryFn: () => generateBlueprint(questionnaireData),
+    queryFn: () => generateBlueprint(questionnaireData, apiKey),
   });
 
   if (isLoading) {

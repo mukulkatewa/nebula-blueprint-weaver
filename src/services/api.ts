@@ -1,4 +1,3 @@
-
 import { QuestionnaireData } from "../pages/Index";
 
 // Define the structure of the blueprint data
@@ -16,19 +15,13 @@ export interface Blueprint {
   };
 }
 
-// IMPORTANT: Replace with your actual Perplexity API key.
-// Storing API keys in frontend code is not secure for production applications.
-// For development, you can paste your key here. For production, consider using a secure method
-// like a backend proxy or a service like Supabase Secrets.
-const PPLX_API_KEY = "YOUR_PERPLEXITY_API_KEY_HERE";
-
 // API function to generate blueprint from an AI service
-export const generateBlueprint = async (data: QuestionnaireData): Promise<Blueprint> => {
+export const generateBlueprint = async (data: QuestionnaireData, apiKey: string): Promise<Blueprint> => {
   console.log("Generating blueprint for:", data);
 
-  if (!PPLX_API_KEY || PPLX_API_KEY === "YOUR_PERPLEXITY_API_KEY_HERE") {
-    console.error("Perplexity API key is not set. Please update it in src/services/api.ts");
-    throw new Error("Perplexity API key is not configured. Please add your key to src/services/api.ts to generate a blueprint.");
+  if (!apiKey) {
+    console.error("Perplexity API key is not provided.");
+    throw new Error("Perplexity API key is not configured. Please provide your key to generate a blueprint.");
   }
 
   const prompt = `
@@ -66,7 +59,7 @@ export const generateBlueprint = async (data: QuestionnaireData): Promise<Bluepr
   const response = await fetch('https://api.perplexity.ai/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${PPLX_API_KEY}`,
+      'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -95,7 +88,6 @@ export const generateBlueprint = async (data: QuestionnaireData): Promise<Bluepr
   const content = result.choices[0].message.content;
 
   try {
-    // The AI might still occasionally wrap the JSON in markdown, so we clean it just in case.
     const cleanedContent = content.replace(/```json\n?/g, '').replace(/\n?```/g, '').trim();
     const blueprint: Blueprint = JSON.parse(cleanedContent);
     return blueprint;

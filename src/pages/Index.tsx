@@ -3,6 +3,7 @@ import { useState } from 'react';
 import LandingPage from '../components/LandingPage';
 import Questionnaire from '../components/Questionnaire';
 import DynamicBlueprintResults from '../components/DynamicBlueprintResults';
+import ApiKeyPrompt from '../components/ApiKeyPrompt';
 
 export type QuestionnaireData = {
   businessOverview: string;
@@ -17,8 +18,9 @@ export type QuestionnaireData = {
 };
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState<'landing' | 'questionnaire' | 'results'>('landing');
+  const [currentStep, setCurrentStep] = useState<'landing' | 'questionnaire' | 'apiKeyPrompt' | 'results'>('landing');
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData | null>(null);
+  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('pplx-api-key') || '');
 
   const handleStartJourney = () => {
     setCurrentStep('questionnaire');
@@ -26,12 +28,26 @@ const Index = () => {
 
   const handleQuestionnaireComplete = (data: QuestionnaireData) => {
     setQuestionnaireData(data);
+    if (!apiKey) {
+      setCurrentStep('apiKeyPrompt');
+    } else {
+      setCurrentStep('results');
+    }
+  };
+  
+  const handleApiKeySubmit = (key: string) => {
+    localStorage.setItem('pplx-api-key', key);
+    setApiKey(key);
     setCurrentStep('results');
   };
 
   const handleBackToLanding = () => {
     setCurrentStep('landing');
     setQuestionnaireData(null);
+  };
+  
+  const handleBackToQuestionnaire = () => {
+    setCurrentStep('questionnaire');
   };
 
   return (
@@ -45,9 +61,16 @@ const Index = () => {
           onBack={handleBackToLanding}
         />
       )}
+      {currentStep === 'apiKeyPrompt' && (
+        <ApiKeyPrompt 
+          onSubmit={handleApiKeySubmit}
+          onBack={handleBackToQuestionnaire}
+        />
+      )}
       {currentStep === 'results' && questionnaireData && (
         <DynamicBlueprintResults 
           questionnaireData={questionnaireData}
+          apiKey={apiKey}
           onBack={handleBackToLanding}
         />
       )}
