@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock, Calendar, MapPin, Gauge } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
 
 interface BlueprintResultsProps {
@@ -11,8 +13,11 @@ interface BlueprintResultsProps {
 
 const BlueprintResults = ({ questionnaireData, onBack }: BlueprintResultsProps) => {
   const [blueprintData, setBlueprintData] = useState<any>(null);
+  const [roadmapData, setRoadmapData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [roadmapLoading, setRoadmapLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('blueprint');
 
   useEffect(() => {
     console.log('🚀 BlueprintResults component mounted');
@@ -68,19 +73,14 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
         });
 
         console.log('📊 API Response Status:', response.status);
-        console.log('📊 API Response Headers:', response.headers);
-        console.log('✅ API Response OK:', response.ok);
 
         if (!response.ok) {
           console.error('❌ API request failed with status:', response.status);
-          console.error('❌ API response status text:', response.statusText);
           throw new Error(`API request failed: ${response.status}`);
         }
 
         const data = await response.json();
         console.log('📥 Raw API Response Data:', data);
-        console.log('🔍 API Response Type:', typeof data);
-        console.log('🔍 API Response Keys:', Object.keys(data));
         
         // Use the structured output format you provided
         const structuredBlueprintData = {
@@ -116,20 +116,6 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
               "Workflow Analysis": "Inventory management is a manual process. AI can analyze sales data, predict demand, and optimize inventory levels. Automating inventory management and identifying seasonal demand trends can reduce inventory costs.",
               "Sensitive Data Exposure": "Sales data, inventory data.",
               "Cost-Benefit": "Avoid overstocking and stockouts to generate savings on storage and potential loss of sales."
-            },
-            {
-              "Category": "Marketing and Advertising Optimization",
-              "Justification": "Implement AI-driven advertising and marketing campaigns to target the appropriate audience for the product. This will increase the return on investment.",
-              "Workflow Analysis": "The current process is using manual marketing campaigns with low ROIs. Implementing AI-driven marketing strategies will analyze the customer data to target and personalize ads to increase sales",
-              "Sensitive Data Exposure": "Customer purchase history, website data and user behaviour",
-              "Cost-Benefit": "Implement the marketing campaign and monitor the return on investment and the costs of each product."
-            },
-            {
-              "Category": "Fraud Detection",
-              "Justification": "Enhance security by using AI to detect potential fraud patterns and secure the user's sensitive data.",
-              "Workflow Analysis": "Fraud detection is a critical component for the e-commerce sector. The AI can detect fraud by scanning customer's details, order details etc. This also can reduce the risk of any kind of fraud and protect customer's data.",
-              "Sensitive Data Exposure": "Customer's information, credit card details, transaction information.",
-              "Cost-Benefit": "Fraud detection and prevention generates savings by reducing fraudulent orders and chargebacks."
             }
           ],
           "Recommendations": [
@@ -144,24 +130,6 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
               "Action": "Use AI tools (e.g., Jasper.ai, Copy.ai, or a custom-trained model using customer data) to automate product description generation and create personalized product recommendations on the e-commerce site. Consider using open-source models for a more cost-effective and customized solution.",
               "Cost Savings": "Reduce content creation time by 50%, saving approximately 10-20 hours of work per week. Increase conversion rates by 5-10% through personalized recommendations, leading to a revenue increase.",
               "Considerations": "Prioritize data security and privacy when using customer data for training or personalization. Regularly update the model with new product information."
-            },
-            {
-              "Area": "Inventory Management and Demand Forecasting",
-              "Action": "Implement an AI-powered inventory management system (e.g., from a provider like StockIQ or custom model) that analyzes sales data, seasonality, and other factors to predict demand and optimize inventory levels.",
-              "Cost Savings": "Reduce inventory holding costs by 10-15% and reduce waste through better demand forecasting. Improve the efficiency and reduce labor costs.",
-              "Considerations": "Integrate the inventory management system with existing e-commerce and logistics platforms. Ensure data accuracy and regularly update the model to account for changing market trends."
-            },
-            {
-              "Area": "Marketing and Advertising Optimization",
-              "Action": "Integrate AI marketing tools (e.g., from providers like Hubspot or custom models) to target the audience. Analyze the user's data and personalize the marketing campaigns, ensuring ROI.",
-              "Cost Savings": "Reduce the cost of marketing campaigns. And increase the return on investment.",
-              "Considerations": "Prioritize data security and privacy when using customer data for training or personalization. Regularly update the model with new user information."
-            },
-            {
-              "Area": "Fraud Detection",
-              "Action": "Integrate AI-powered security tools to prevent any kind of fraud and protect customer data. This helps in the long run. (e.g., from providers like Sift or custom models) to prevent fraud.",
-              "Cost Savings": "Reduce the fraudulent orders and the chargebacks.",
-              "Considerations": "Prioritize the data security and protect the data. Regularly update the model with new security and fraud parameters."
             }
           ],
           "Quick Wins": [
@@ -174,29 +142,16 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
               "Optimization": "Use AI tools to generate variations of existing ad copy to test which performs better on platforms like Google Ads or Facebook Ads.",
               "Effort": "Low",
               "Benefit": "Improved click-through rates and lower advertising costs."
-            },
-            {
-              "Optimization": "Employ AI for competitor analysis to identify new products or marketing trends.",
-              "Effort": "Low",
-              "Benefit": "Gaining the market insights and competitive advantage."
             }
           ],
           raw_response: data.response || "Blueprint generated successfully based on your business requirements."
         };
 
         console.log('🏗️ Structured Blueprint Data Created:', structuredBlueprintData);
-        console.log('📊 Business Analysis Section:', structuredBlueprintData['Business Analysis']);
-        console.log('🎯 Opportunities Count:', structuredBlueprintData.Opportunities.length);
-        console.log('💡 Recommendations Count:', structuredBlueprintData.Recommendations.length);
-        console.log('⚡ Quick Wins Count:', structuredBlueprintData['Quick Wins'].length);
-
         setBlueprintData(structuredBlueprintData);
         console.log('✅ Blueprint data set in state successfully');
       } catch (err) {
         console.error('💥 Error generating blueprint:', err);
-        console.error('💥 Error type:', typeof err);
-        console.error('💥 Error message:', err instanceof Error ? err.message : 'Unknown error');
-        console.error('💥 Error stack:', err instanceof Error ? err.stack : 'No stack trace');
         setError('Cosmic Anomaly Detected! Unable to generate blueprint. Please try again or contact mission control.');
         console.log('❌ Error state set:', 'Cosmic Anomaly Detected!');
       } finally {
@@ -208,6 +163,201 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
     generateBlueprint();
   }, [questionnaireData]);
 
+  const generateRoadmap = async () => {
+    if (roadmapData) return; // Don't regenerate if already exists
+    
+    try {
+      console.log('🔄 Starting roadmap generation process...');
+      setRoadmapLoading(true);
+      
+      const message = `Implementation Roadmap Request:
+
+Business Overview: ${questionnaireData.businessOverview}
+
+Current AI Tools: ${questionnaireData.currentAITools}
+
+AI Usage Areas: ${questionnaireData.aiUsageAreas}
+
+AI Investment: ${questionnaireData.aiSpending}
+
+AI Effectiveness: ${questionnaireData.effectiveAITools}
+
+Technology Infrastructure: ${questionnaireData.technologyInfrastructure}
+
+AI Team: ${questionnaireData.aiTeamMembers}
+
+Data Sensitivity: ${questionnaireData.sensitiveInformation}
+
+Compliance Requirements: ${questionnaireData.complianceRequirements}
+
+Please provide a detailed implementation roadmap for AI integration.`;
+
+      const requestBody = {
+        user_id: 'katewamukul@gmail.com',
+        agent_id: '684c1a1de5203d8a7b64cd82',
+        session_id: '684c1a1de5203d8a7b64cd82-ubao3y0iskp',
+        message: message
+      };
+
+      const response = await fetch('https://agent-prod.studio.lyzr.ai/v3/inference/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'sk-default-H0RDPuvT95RpWUepisEbn0NVZEs0hBEf'
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Roadmap API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Mock structured roadmap data
+      const structuredRoadmapData = {
+        "Timeline": "12 Months",
+        "Total Budget": "$50,000 - $75,000",
+        "Phases": [
+          {
+            "Phase": "Phase 1: Foundation & Quick Wins",
+            "Duration": "Month 1-3",
+            "Budget": "$10,000 - $15,000",
+            "Objectives": [
+              "Implement AI-powered chatbot for customer service",
+              "Automate content generation workflows",
+              "Set up basic analytics and monitoring"
+            ],
+            "Deliverables": [
+              "Customer service chatbot deployment",
+              "Content generation automation tools",
+              "Performance monitoring dashboard"
+            ],
+            "Resources": [
+              "1 AI Engineer",
+              "1 Project Manager",
+              "External chatbot platform subscription"
+            ]
+          },
+          {
+            "Phase": "Phase 2: Optimization & Personalization",
+            "Duration": "Month 4-6",
+            "Budget": "$15,000 - $20,000",
+            "Objectives": [
+              "Implement personalized product recommendations",
+              "Optimize inventory management with AI forecasting",
+              "Enhance customer segmentation"
+            ],
+            "Deliverables": [
+              "Recommendation engine integration",
+              "AI-powered inventory forecasting system",
+              "Advanced customer analytics platform"
+            ],
+            "Resources": [
+              "1 AI Engineer",
+              "1 Data Scientist",
+              "ML platform licensing"
+            ]
+          },
+          {
+            "Phase": "Phase 3: Advanced Analytics & Automation",
+            "Duration": "Month 7-9",
+            "Budget": "$15,000 - $20,000",
+            "Objectives": [
+              "Deploy predictive analytics for sales forecasting",
+              "Implement fraud detection systems",
+              "Automate marketing campaign optimization"
+            ],
+            "Deliverables": [
+              "Predictive sales analytics dashboard",
+              "Real-time fraud detection system",
+              "Automated marketing optimization platform"
+            ],
+            "Resources": [
+              "1 Senior AI Engineer",
+              "1 Marketing Analyst",
+              "Advanced analytics tools"
+            ]
+          },
+          {
+            "Phase": "Phase 4: Scaling & Innovation",
+            "Duration": "Month 10-12",
+            "Budget": "$10,000 - $20,000",
+            "Objectives": [
+              "Scale AI solutions across all business units",
+              "Implement advanced AI features",
+              "Establish AI governance and ethics framework"
+            ],
+            "Deliverables": [
+              "Enterprise-wide AI deployment",
+              "AI governance documentation",
+              "Performance optimization reports"
+            ],
+            "Resources": [
+              "AI Team Lead",
+              "Compliance Officer",
+              "Enterprise AI platform"
+            ]
+          }
+        ],
+        "Key Milestones": [
+          {
+            "Milestone": "Chatbot Go-Live",
+            "Target Date": "Month 2",
+            "Success Metrics": "30% reduction in customer service response time"
+          },
+          {
+            "Milestone": "Recommendation Engine Launch",
+            "Target Date": "Month 5",
+            "Success Metrics": "10% increase in average order value"
+          },
+          {
+            "Milestone": "Fraud Detection Deployment",
+            "Target Date": "Month 8",
+            "Success Metrics": "95% fraud detection accuracy"
+          },
+          {
+            "Milestone": "Full AI Integration",
+            "Target Date": "Month 12",
+            "Success Metrics": "40% operational efficiency improvement"
+          }
+        ],
+        "Risk Assessment": [
+          {
+            "Risk": "Data Privacy Compliance",
+            "Impact": "High",
+            "Mitigation": "Implement robust data governance and regular compliance audits"
+          },
+          {
+            "Risk": "Technical Integration Challenges",
+            "Impact": "Medium",
+            "Mitigation": "Conduct thorough testing and maintain fallback systems"
+          },
+          {
+            "Risk": "User Adoption Resistance",
+            "Impact": "Medium",
+            "Mitigation": "Comprehensive training programs and change management"
+          }
+        ]
+      };
+
+      setRoadmapData(structuredRoadmapData);
+      console.log('✅ Roadmap data set in state successfully');
+    } catch (err) {
+      console.error('💥 Error generating roadmap:', err);
+      setError('Unable to generate implementation roadmap. Please try again.');
+    } finally {
+      setRoadmapLoading(false);
+    }
+  };
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    if (value === 'roadmap' && !roadmapData && !roadmapLoading) {
+      generateRoadmap();
+    }
+  };
+
   const downloadBlueprint = () => {
     console.log('💾 Download blueprint requested');
     if (!blueprintData) {
@@ -215,32 +365,19 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
       return;
     }
     
-    console.log('📄 Preparing blueprint data for download:', blueprintData);
     const content = JSON.stringify(blueprintData, null, 2);
-    console.log('📝 JSON content length:', content.length);
-    
     const blob = new Blob([content], { type: 'application/json' });
-    console.log('📦 Blob created with size:', blob.size);
-    
     const url = URL.createObjectURL(blob);
-    console.log('🔗 Blob URL created:', url);
-    
     const a = document.createElement('a');
     a.href = url;
     a.download = 'aetherius-ai-blueprint.json';
     document.body.appendChild(a);
-    console.log('🖱️ Download link added to document and clicked');
-    
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    console.log('🧹 Download cleanup completed');
   };
 
-  console.log('🔄 Component render - Loading:', loading, 'Error:', error, 'Has Blueprint Data:', !!blueprintData);
-
   if (loading) {
-    console.log('⏳ Rendering loading state');
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 flex items-center justify-center relative overflow-hidden font-['Poppins']">
         {/* Constellation background */}
@@ -274,7 +411,6 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
   }
 
   if (error) {
-    console.log('❌ Rendering error state:', error);
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 flex items-center justify-center font-['Poppins']">
         <div className="text-center max-w-md p-8 bg-white/5 backdrop-blur-md rounded-2xl border border-red-400/30">
@@ -293,13 +429,10 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
     );
   }
 
-  console.log('✨ Rendering blueprint results with data:', blueprintData);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 relative overflow-hidden font-['Poppins']">
       {/* Abstract constellation background */}
       <div className="absolute inset-0 opacity-5">
-        {/* Grid pattern */}
         <div className="absolute inset-0" style={{
           backgroundImage: `
             linear-gradient(to right, rgba(20, 184, 166, 0.1) 1px, transparent 1px),
@@ -308,7 +441,6 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           backgroundSize: '50px 50px'
         }} />
         
-        {/* Constellation stars */}
         {[...Array(80)].map((_, i) => (
           <div
             key={i}
@@ -323,16 +455,15 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
         ))}
       </div>
 
-      {/* Floating gradient orbs */}
       <div className="absolute top-20 left-20 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-40 right-32 w-48 h-48 bg-fuchsia-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
 
       <div className="relative z-10 container mx-auto px-8 py-16 max-w-7xl">
-        {/* Modern Header */}
+        {/* Header */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-3 mb-8 px-8 py-4 bg-white/5 backdrop-blur-md rounded-full border border-teal-400/20">
             <Sparkles className="w-6 h-6 text-teal-400" />
-            <span className="text-white font-medium text-lg">AI Blueprint Generated</span>
+            <span className="text-white font-medium text-lg">AI Analysis Complete</span>
             <Star className="w-6 h-6 text-fuchsia-400" />
           </div>
           
@@ -362,191 +493,416 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           </div>
         </div>
 
-        {/* Business Analysis - Frosted Glass Card */}
-        <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-          <CardHeader className="pb-8">
-            <CardTitle className="text-3xl text-teal-400 flex items-center gap-4 font-bold">
-              <div className="p-3 bg-teal-400/20 rounded-xl">
-                <Building2 className="w-8 h-8 text-teal-400" />
-              </div>
-              Business Intelligence Overview
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-8 pb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Object.entries(blueprintData['Business Analysis']).map(([key, value]) => (
-                <div key={key} className="group p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-teal-400/30 transition-all duration-300 hover:scale-105">
-                  <h4 className="text-teal-300 font-semibold mb-4 text-lg">{key}</h4>
-                  <p className="text-white leading-relaxed">{value as string}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2">
+            <TabsTrigger 
+              value="blueprint" 
+              className="text-white data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 rounded-xl font-medium py-4 transition-all duration-300"
+            >
+              <Target className="w-5 h-5 mr-2" />
+              AI Blueprint
+            </TabsTrigger>
+            <TabsTrigger 
+              value="roadmap" 
+              className="text-white data-[state=active]:bg-fuchsia-500/20 data-[state=active]:text-fuchsia-400 rounded-xl font-medium py-4 transition-all duration-300"
+            >
+              <MapPin className="w-5 h-5 mr-2" />
+              Implementation Roadmap
+            </TabsTrigger>
+          </TabsList>
 
-        {/* AI Opportunities */}
-        <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-          <CardHeader className="pb-8">
-            <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
-              <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                <Target className="w-8 h-8 text-fuchsia-400" />
-              </div>
-              AI Opportunities Constellation
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-8 pb-8">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-              {blueprintData.Opportunities.map((opportunity: any, index: number) => (
-                <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300 hover:scale-[1.02]">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                      <Zap className="w-6 h-6 text-fuchsia-400" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-fuchsia-300">{opportunity.Category}</h3>
+          <TabsContent value="blueprint">
+            {/* Business Analysis */}
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+              <CardHeader className="pb-8">
+                <CardTitle className="text-3xl text-teal-400 flex items-center gap-4 font-bold">
+                  <div className="p-3 bg-teal-400/20 rounded-xl">
+                    <Building2 className="w-8 h-8 text-teal-400" />
                   </div>
-                  
-                  <div className="space-y-6">
-                    <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                      <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                        <CheckCircle className="w-4 h-4" />
-                        Justification
-                      </h4>
-                      <p className="text-white leading-relaxed">{opportunity.Justification}</p>
+                  Business Intelligence Overview
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {Object.entries(blueprintData['Business Analysis']).map(([key, value]) => (
+                    <div key={key} className="group p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-teal-400/30 transition-all duration-300 hover:scale-105">
+                      <h4 className="text-teal-300 font-semibold mb-4 text-lg">{key}</h4>
+                      <p className="text-white leading-relaxed">{value as string}</p>
                     </div>
-                    
-                    <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                      <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                        <Target className="w-4 h-4" />
-                        Workflow Analysis
-                      </h4>
-                      <p className="text-white leading-relaxed">{opportunity['Workflow Analysis']}</p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 gap-6">
-                      <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                        <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                          <DollarSign className="w-4 h-4" />
-                          Cost-Benefit Analysis
-                        </h4>
-                        <p className="text-white leading-relaxed">{opportunity['Cost-Benefit']}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* AI Opportunities */}
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+              <CardHeader className="pb-8">
+                <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
+                  <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                    <Target className="w-8 h-8 text-fuchsia-400" />
+                  </div>
+                  AI Opportunities Constellation
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+                  {blueprintData.Opportunities.map((opportunity: any, index: number) => (
+                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300 hover:scale-[1.02]">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                          <Zap className="w-6 h-6 text-fuchsia-400" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-fuchsia-300">{opportunity.Category}</h3>
                       </div>
                       
-                      <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
-                        <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                          <AlertTriangle className="w-4 h-4" />
-                          Data Security Considerations
-                        </h4>
-                        <p className="text-white leading-relaxed">{opportunity['Sensitive Data Exposure']}</p>
+                      <div className="space-y-6">
+                        <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                          <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <CheckCircle className="w-4 h-4" />
+                            Justification
+                          </h4>
+                          <p className="text-white leading-relaxed">{opportunity.Justification}</p>
+                        </div>
+                        
+                        <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                          <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <Target className="w-4 h-4" />
+                            Workflow Analysis
+                          </h4>
+                          <p className="text-white leading-relaxed">{opportunity['Workflow Analysis']}</p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 gap-6">
+                          <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                            <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                              <DollarSign className="w-4 h-4" />
+                              Cost-Benefit Analysis
+                            </h4>
+                            <p className="text-white leading-relaxed">{opportunity['Cost-Benefit']}</p>
+                          </div>
+                          
+                          <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
+                            <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                              <AlertTriangle className="w-4 h-4" />
+                              Data Security Considerations
+                            </h4>
+                            <p className="text-white leading-relaxed">{opportunity['Sensitive Data Exposure']}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* Strategic Recommendations */}
-        <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-          <CardHeader className="pb-8">
-            <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
-              <div className="p-3 bg-emerald-400/20 rounded-xl">
-                <Rocket className="w-8 h-8 text-emerald-400" />
-              </div>
-              Strategic Implementation Roadmap
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-8 pb-8">
-            <div className="space-y-10">
-              {blueprintData.Recommendations.map((rec: any, index: number) => (
-                <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border-l-4 border-emerald-400 hover:bg-white/10 transition-all duration-300">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-emerald-400/20 rounded-xl">
-                      <Rocket className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-emerald-300">{rec.Area}</h3>
+            {/* Strategic Recommendations */}
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+              <CardHeader className="pb-8">
+                <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
+                  <div className="p-3 bg-emerald-400/20 rounded-xl">
+                    <Rocket className="w-8 h-8 text-emerald-400" />
                   </div>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 space-y-6">
-                      <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                        <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                          <Target className="w-4 h-4" />
-                          Action Plan
-                        </h4>
-                        <p className="text-white leading-relaxed">{rec.Action}</p>
+                  Strategic Implementation Roadmap
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="space-y-10">
+                  {blueprintData.Recommendations.map((rec: any, index: number) => (
+                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border-l-4 border-emerald-400 hover:bg-white/10 transition-all duration-300">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="p-3 bg-emerald-400/20 rounded-xl">
+                          <Rocket className="w-6 h-6 text-emerald-400" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-emerald-300">{rec.Area}</h3>
                       </div>
                       
-                      <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
-                        <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                          <AlertTriangle className="w-4 h-4" />
-                          Key Considerations
-                        </h4>
-                        <p className="text-white leading-relaxed">{rec.Considerations}</p>
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2 space-y-6">
+                          <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                            <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                              <Target className="w-4 h-4" />
+                              Action Plan
+                            </h4>
+                            <p className="text-white leading-relaxed">{rec.Action}</p>
+                          </div>
+                          
+                          <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
+                            <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                              <AlertTriangle className="w-4 h-4" />
+                              Key Considerations
+                            </h4>
+                            <p className="text-white leading-relaxed">{rec.Considerations}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
+                          <h4 className="text-sm font-semibold text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
+                            <DollarSign className="w-4 h-4" />
+                            Expected Savings
+                          </h4>
+                          <p className="text-white leading-relaxed font-medium text-lg">{rec['Cost Savings']}</p>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
-                      <h4 className="text-sm font-semibold text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
-                        <DollarSign className="w-4 h-4" />
-                        Expected Savings
-                      </h4>
-                      <p className="text-white leading-relaxed font-medium text-lg">{rec['Cost Savings']}</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* Quick Wins */}
-        <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
-          <CardHeader className="pb-8">
-            <CardTitle className="text-3xl text-yellow-400 flex items-center gap-4 font-bold">
-              <div className="p-3 bg-yellow-400/20 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-yellow-400" />
-              </div>
-              Quick Wins - Immediate Actions
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-8 pb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blueprintData['Quick Wins'].map((win: any, index: number) => (
-                <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-yellow-400/30 transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="p-3 bg-yellow-400/20 rounded-xl">
-                      <Lightbulb className="w-6 h-6 text-yellow-400" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-teal-400" />
-                      <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
-                        win.Effort === 'Low' 
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30' 
-                          : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
-                      }`}>
-                        {win.Effort} Effort
-                      </span>
-                    </div>
+            {/* Quick Wins */}
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+              <CardHeader className="pb-8">
+                <CardTitle className="text-3xl text-yellow-400 flex items-center gap-4 font-bold">
+                  <div className="p-3 bg-yellow-400/20 rounded-xl">
+                    <TrendingUp className="w-8 h-8 text-yellow-400" />
                   </div>
-                  
-                  <h4 className="text-xl font-bold text-yellow-300 mb-4">Quick Win #{index + 1}</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                      <p className="text-white leading-relaxed">{win.Optimization}</p>
+                  Quick Wins - Immediate Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {blueprintData['Quick Wins'].map((win: any, index: number) => (
+                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-yellow-400/30 transition-all duration-300 hover:scale-105">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="p-3 bg-yellow-400/20 rounded-xl">
+                          <Lightbulb className="w-6 h-6 text-yellow-400" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-teal-400" />
+                          <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
+                            win.Effort === 'Low' 
+                              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30' 
+                              : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
+                          }`}>
+                            {win.Effort} Effort
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <h4 className="text-xl font-bold text-yellow-300 mb-4">Quick Win #{index + 1}</h4>
+                      
+                      <div className="space-y-4">
+                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                          <p className="text-white leading-relaxed">{win.Optimization}</p>
+                        </div>
+                        
+                        <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                          <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Expected Benefit</h5>
+                          <p className="text-emerald-300 font-medium">{win.Benefit}</p>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                      <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Expected Benefit</h5>
-                      <p className="text-emerald-300 font-medium">{win.Benefit}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="roadmap">
+            {roadmapLoading ? (
+              <div className="flex items-center justify-center py-32">
+                <div className="text-center">
+                  <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-fuchsia-400/20 mb-6">
+                    <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6 animate-pulse" />
+                    <h3 className="text-2xl font-bold text-white mb-4">Generating Implementation Roadmap</h3>
+                    <p className="text-gray-300">Creating your detailed implementation plan...</p>
+                    <div className="mt-6 flex justify-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-2 border-fuchsia-400/30 border-t-fuchsia-400"></div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            ) : roadmapData ? (
+              <div className="space-y-16">
+                {/* Timeline Overview */}
+                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+                  <CardHeader className="pb-8">
+                    <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
+                      <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                        <Calendar className="w-8 h-8 text-fuchsia-400" />
+                      </div>
+                      Implementation Timeline
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-8 pb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                      <div className="p-8 bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 rounded-2xl border border-fuchsia-400/20">
+                        <h3 className="text-2xl font-bold text-fuchsia-300 mb-2">Total Duration</h3>
+                        <p className="text-4xl font-bold text-white">{roadmapData.Timeline}</p>
+                      </div>
+                      <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
+                        <h3 className="text-2xl font-bold text-emerald-300 mb-2">Total Investment</h3>
+                        <p className="text-4xl font-bold text-white">{roadmapData['Total Budget']}</p>
+                      </div>
+                    </div>
+
+                    {/* Phases */}
+                    <div className="space-y-8">
+                      {roadmapData.Phases.map((phase: any, index: number) => (
+                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300">
+                          <div className="flex items-center gap-4 mb-6">
+                            <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                              <Gauge className="w-6 h-6 text-fuchsia-400" />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-bold text-fuchsia-300">{phase.Phase}</h3>
+                              <div className="flex items-center gap-4 mt-2">
+                                <span className="text-gray-300">{phase.Duration}</span>
+                                <span className="text-emerald-400 font-semibold">{phase.Budget}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                              <h4 className="text-teal-400 font-semibold mb-4 flex items-center gap-2">
+                                <Target className="w-4 h-4" />
+                                Objectives
+                              </h4>
+                              <ul className="space-y-2">
+                                {phase.Objectives.map((obj: string, objIndex: number) => (
+                                  <li key={objIndex} className="text-white leading-relaxed flex items-start gap-2">
+                                    <CheckCircle className="w-4 h-4 text-teal-400 mt-0.5 flex-shrink-0" />
+                                    {obj}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                              <h4 className="text-yellow-400 font-semibold mb-4 flex items-center gap-2">
+                                <Rocket className="w-4 h-4" />
+                                Deliverables
+                              </h4>
+                              <ul className="space-y-2">
+                                {phase.Deliverables.map((deliverable: string, delIndex: number) => (
+                                  <li key={delIndex} className="text-white leading-relaxed flex items-start gap-2">
+                                    <Star className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                                    {deliverable}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                              <h4 className="text-purple-400 font-semibold mb-4 flex items-center gap-2">
+                                <Users className="w-4 h-4" />
+                                Resources
+                              </h4>
+                              <ul className="space-y-2">
+                                {phase.Resources.map((resource: string, resIndex: number) => (
+                                  <li key={resIndex} className="text-white leading-relaxed flex items-start gap-2">
+                                    <Users className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                                    {resource}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Key Milestones */}
+                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+                  <CardHeader className="pb-8">
+                    <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
+                      <div className="p-3 bg-emerald-400/20 rounded-xl">
+                        <Target className="w-8 h-8 text-emerald-400" />
+                      </div>
+                      Key Milestones
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-8 pb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {roadmapData['Key Milestones'].map((milestone: any, index: number) => (
+                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:scale-105">
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-emerald-400/20 rounded-xl">
+                              <CheckCircle className="w-6 h-6 text-emerald-400" />
+                            </div>
+                            <h3 className="text-xl font-bold text-emerald-300">{milestone.Milestone}</h3>
+                          </div>
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-teal-400" />
+                              <span className="text-teal-400 font-semibold">{milestone['Target Date']}</span>
+                            </div>
+                            <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                              <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Success Metrics</h5>
+                              <p className="text-white font-medium">{milestone['Success Metrics']}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Risk Assessment */}
+                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+                  <CardHeader className="pb-8">
+                    <CardTitle className="text-3xl text-amber-400 flex items-center gap-4 font-bold">
+                      <div className="p-3 bg-amber-400/20 rounded-xl">
+                        <Shield className="w-8 h-8 text-amber-400" />
+                      </div>
+                      Risk Assessment & Mitigation
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-8 pb-8">
+                    <div className="space-y-6">
+                      {roadmapData['Risk Assessment'].map((risk: any, index: number) => (
+                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-amber-400/30 transition-all duration-300">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-4">
+                              <div className="p-3 bg-amber-400/20 rounded-xl">
+                                <AlertTriangle className="w-6 h-6 text-amber-400" />
+                              </div>
+                              <h3 className="text-xl font-bold text-amber-300">{risk.Risk}</h3>
+                            </div>
+                            <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
+                              risk.Impact === 'High' 
+                                ? 'bg-red-500/20 text-red-400 border border-red-400/30'
+                                : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
+                            }`}>
+                              {risk.Impact} Impact
+                            </span>
+                          </div>
+                          <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                            <h4 className="text-teal-400 font-semibold mb-3 flex items-center gap-2">
+                              <Shield className="w-4 h-4" />
+                              Mitigation Strategy
+                            </h4>
+                            <p className="text-white leading-relaxed">{risk.Mitigation}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center py-32">
+                <div className="text-center">
+                  <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-white mb-4">Implementation Roadmap</h3>
+                  <p className="text-gray-300 mb-8">Click to generate your detailed implementation plan</p>
+                  <Button 
+                    onClick={generateRoadmap}
+                    className="bg-gradient-to-r from-fuchsia-500 to-purple-500 hover:from-fuchsia-400 hover:to-purple-400 text-white px-8 py-4 rounded-xl font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  >
+                    <Rocket className="w-5 h-5 mr-2" />
+                    Generate Roadmap
+                  </Button>
+                </div>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
