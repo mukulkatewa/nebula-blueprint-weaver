@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,7 +21,6 @@ export default {
 		extend: {
 			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
-				'orbitron': ['Orbitron', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
