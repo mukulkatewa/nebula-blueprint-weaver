@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,8 +16,12 @@ const BlueprintResults = ({ questionnaireData, onBack }: BlueprintResultsProps) 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log('🚀 BlueprintResults component mounted');
+    console.log('📝 Questionnaire data received:', questionnaireData);
+
     const generateBlueprint = async () => {
       try {
+        console.log('🔄 Starting blueprint generation process...');
         setLoading(true);
         
         // Combine all questionnaire answers into a single message
@@ -44,26 +47,41 @@ Compliance Requirements: ${questionnaireData.complianceRequirements}
 
 Please provide a comprehensive AI implementation blueprint for this business.`;
 
+        console.log('📤 API Request Message:', message);
+        console.log('🌐 Making API call to Lyzr agent...');
+
+        const requestBody = {
+          user_id: 'katewamukul@gmail.com',
+          agent_id: '6846d65762d8a0cca7618622',
+          session_id: '6846d65762d8a0cca7618622-drg9hreicli',
+          message: message
+        };
+
+        console.log('📋 API Request Body:', requestBody);
+
         const response = await fetch('https://agent-prod.studio.lyzr.ai/v3/inference/chat/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'x-api-key': 'sk-default-H0RDPuvT95RpWUepisEbn0NVZEs0hBEf'
           },
-          body: JSON.stringify({
-            user_id: 'katewamukul@gmail.com',
-            agent_id: '6846d65762d8a0cca7618622',
-            session_id: '6846d65762d8a0cca7618622-drg9hreicli',
-            message: message
-          })
+          body: JSON.stringify(requestBody)
         });
 
+        console.log('📊 API Response Status:', response.status);
+        console.log('📊 API Response Headers:', response.headers);
+        console.log('✅ API Response OK:', response.ok);
+
         if (!response.ok) {
+          console.error('❌ API request failed with status:', response.status);
+          console.error('❌ API response status text:', response.statusText);
           throw new Error(`API request failed: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log('API Response:', data);
+        console.log('📥 Raw API Response Data:', data);
+        console.log('🔍 API Response Type:', typeof data);
+        console.log('🔍 API Response Keys:', Object.keys(data));
         
         // Use the structured output format you provided
         const structuredBlueprintData = {
@@ -167,12 +185,24 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           raw_response: data.response || "Blueprint generated successfully based on your business requirements."
         };
 
+        console.log('🏗️ Structured Blueprint Data Created:', structuredBlueprintData);
+        console.log('📊 Business Analysis Section:', structuredBlueprintData['Business Analysis']);
+        console.log('🎯 Opportunities Count:', structuredBlueprintData.Opportunities.length);
+        console.log('💡 Recommendations Count:', structuredBlueprintData.Recommendations.length);
+        console.log('⚡ Quick Wins Count:', structuredBlueprintData['Quick Wins'].length);
+
         setBlueprintData(structuredBlueprintData);
+        console.log('✅ Blueprint data set in state successfully');
       } catch (err) {
-        console.error('Error generating blueprint:', err);
+        console.error('💥 Error generating blueprint:', err);
+        console.error('💥 Error type:', typeof err);
+        console.error('💥 Error message:', err instanceof Error ? err.message : 'Unknown error');
+        console.error('💥 Error stack:', err instanceof Error ? err.stack : 'No stack trace');
         setError('Cosmic Anomaly Detected! Unable to generate blueprint. Please try again or contact mission control.');
+        console.log('❌ Error state set:', 'Cosmic Anomaly Detected!');
       } finally {
         setLoading(false);
+        console.log('🏁 Blueprint generation process completed, loading set to false');
       }
     };
 
@@ -180,21 +210,38 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
   }, [questionnaireData]);
 
   const downloadBlueprint = () => {
-    if (!blueprintData) return;
+    console.log('💾 Download blueprint requested');
+    if (!blueprintData) {
+      console.warn('⚠️ Cannot download: Blueprint data is null');
+      return;
+    }
     
+    console.log('📄 Preparing blueprint data for download:', blueprintData);
     const content = JSON.stringify(blueprintData, null, 2);
+    console.log('📝 JSON content length:', content.length);
+    
     const blob = new Blob([content], { type: 'application/json' });
+    console.log('📦 Blob created with size:', blob.size);
+    
     const url = URL.createObjectURL(blob);
+    console.log('🔗 Blob URL created:', url);
+    
     const a = document.createElement('a');
     a.href = url;
     a.download = 'aetherius-ai-blueprint.json';
     document.body.appendChild(a);
+    console.log('🖱️ Download link added to document and clicked');
+    
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    console.log('🧹 Download cleanup completed');
   };
 
+  console.log('🔄 Component render - Loading:', loading, 'Error:', error, 'Has Blueprint Data:', !!blueprintData);
+
   if (loading) {
+    console.log('⏳ Rendering loading state');
     return (
       <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
         {/* Background stars */}
@@ -228,6 +275,7 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
   }
 
   if (error) {
+    console.log('❌ Rendering error state:', error);
     return (
       <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
         <div className="relative z-10 text-center max-w-md">
@@ -242,6 +290,8 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
       </div>
     );
   }
+
+  console.log('✨ Rendering blueprint results with data:', blueprintData);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
