@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock, Calendar, MapPin, Gauge, Calculator } from 'lucide-react';
+import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock, Calendar, MapPin, Gauge, Calculator, Award, TrendingDown } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
 
 interface BlueprintResultsProps {
@@ -508,7 +508,7 @@ const CostBreakdownSection = ({ costData, costLoading, generateCostBreakdown }: 
       </Card>
 
       {/* Cost Savings Analysis */}
-      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-300">
         <CardHeader className="pb-8">
           <CardTitle className="text-3xl text-green-400 flex items-center gap-4 font-bold">
             <div className="p-3 bg-green-400/20 rounded-xl">
@@ -538,7 +538,7 @@ const CostBreakdownSection = ({ costData, costLoading, generateCostBreakdown }: 
       </Card>
 
       {/* Financial Projections */}
-      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-300">
         <CardHeader className="pb-8">
           <CardTitle className="text-3xl text-purple-400 flex items-center gap-4 font-bold">
             <div className="p-3 bg-purple-400/20 rounded-xl">
@@ -577,7 +577,7 @@ const CostBreakdownSection = ({ costData, costLoading, generateCostBreakdown }: 
       </Card>
 
       {/* Operational Costs */}
-      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-300">
         <CardHeader className="pb-8">
           <CardTitle className="text-3xl text-orange-400 flex items-center gap-4 font-bold">
             <div className="p-3 bg-orange-400/20 rounded-xl">
@@ -611,13 +611,205 @@ const CostBreakdownSection = ({ costData, costLoading, generateCostBreakdown }: 
   );
 };
 
+const SwotAnalysisSection = ({ swotData, swotLoading, generateSwotAnalysis }: { swotData: any; swotLoading: boolean; generateSwotAnalysis: () => void }) => {
+  if (swotLoading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-purple-400/20 mb-6">
+            <Award className="w-16 h-16 text-purple-400 mx-auto mb-6 animate-pulse" />
+            <h3 className="text-2xl font-bold text-white mb-4">Generating SWOT Analysis</h3>
+            <p className="text-gray-300">Analyzing strengths, weaknesses, opportunities, and threats...</p>
+            <div className="mt-6 flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-purple-400/30 border-t-purple-400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!swotData) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <Award className="w-16 h-16 text-purple-400 mx-auto mb-6" />
+          <h3 className="text-2xl font-bold text-white mb-4">SWOT Analysis</h3>
+          <p className="text-gray-300 mb-8">Click to generate your comprehensive SWOT analysis</p>
+          <Button 
+            onClick={generateSwotAnalysis}
+            className="bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-400 hover:to-violet-400 text-white px-8 py-4 rounded-xl font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          >
+            <Award className="w-5 h-5 mr-2" />
+            Generate SWOT Analysis
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-16">
+      {/* SWOT Matrix Overview */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-purple-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-purple-400/20 rounded-xl">
+              <Award className="w-8 h-8 text-purple-400" />
+            </div>
+            SWOT Analysis Matrix
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Strengths */}
+            <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-2xl border border-emerald-400/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-emerald-400/20 rounded-xl">
+                  <TrendingUp className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-emerald-300">Strengths</h3>
+              </div>
+              <div className="space-y-4">
+                {swotData.Strengths.map((strength: string, index: number) => (
+                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-white leading-relaxed">{strength}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Weaknesses */}
+            <div className="p-8 bg-gradient-to-br from-red-500/10 to-pink-500/10 rounded-2xl border border-red-400/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-red-400/20 rounded-xl">
+                  <TrendingDown className="w-6 h-6 text-red-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-red-300">Weaknesses</h3>
+              </div>
+              <div className="space-y-4">
+                {swotData.Weaknesses.map((weakness: string, index: number) => (
+                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-white leading-relaxed">{weakness}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Opportunities */}
+            <div className="p-8 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-blue-400/20 rounded-xl">
+                  <Target className="w-6 h-6 text-blue-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-300">Opportunities</h3>
+              </div>
+              <div className="space-y-4">
+                {swotData.Opportunities.map((opportunity: string, index: number) => (
+                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-white leading-relaxed">{opportunity}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Threats */}
+            <div className="p-8 bg-gradient-to-br from-orange-500/10 to-yellow-500/10 rounded-2xl border border-orange-400/20">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-orange-400/20 rounded-xl">
+                  <AlertTriangle className="w-6 h-6 text-orange-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-orange-300">Threats</h3>
+              </div>
+              <div className="space-y-4">
+                {swotData.Threats.map((threat: string, index: number) => (
+                  <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-white leading-relaxed">{threat}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Strategic Insights */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-teal-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-teal-400/20 rounded-xl">
+              <Lightbulb className="w-8 h-8 text-teal-400" />
+            </div>
+            Strategic Insights
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="space-y-8">
+            {swotData['Strategic Insights'].map((insight: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-teal-400/30 transition-all duration-300">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-teal-400/20 rounded-xl">
+                    <Rocket className="w-6 h-6 text-teal-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-teal-300">{insight.Strategy}</h3>
+                </div>
+                <p className="text-white leading-relaxed">{insight.Description}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Action Items */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+              <CheckCircle className="w-8 h-8 text-fuchsia-400" />
+            </div>
+            Recommended Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {swotData['Action Items'].map((action: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                    <Star className="w-6 h-6 text-fuchsia-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-fuchsia-300">{action.Priority} Priority</h3>
+                    <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                      action.Priority === 'High' 
+                        ? 'bg-red-500/20 text-red-400 border border-red-400/30'
+                        : action.Priority === 'Medium'
+                        ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
+                        : 'bg-green-500/20 text-green-400 border border-green-400/30'
+                    }`}>
+                      {action.Timeline}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-white leading-relaxed">{action.Action}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 const BlueprintResults = ({ questionnaireData, onBack }: BlueprintResultsProps) => {
   const [blueprintData, setBlueprintData] = useState<any>(null);
   const [roadmapData, setRoadmapData] = useState<any>(null);
   const [costData, setCostData] = useState<any>(null);
+  const [swotData, setSwotData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [roadmapLoading, setRoadmapLoading] = useState(false);
   const [costLoading, setCostLoading] = useState(false);
+  const [swotLoading, setSwotLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('blueprint');
 
@@ -1109,6 +1301,135 @@ Please provide a detailed cost breakdown analysis for AI implementation.`;
     }
   };
 
+  const generateSwotAnalysis = async () => {
+    if (swotData) return; // Don't regenerate if already exists
+    
+    try {
+      console.log('🔄 Starting SWOT analysis generation process...');
+      setSwotLoading(true);
+      
+      const message = `SWOT Analysis Request:
+
+Business Overview: ${questionnaireData.businessOverview}
+
+Current AI Tools: ${questionnaireData.currentAITools}
+
+AI Usage Areas: ${questionnaireData.aiUsageAreas}
+
+AI Investment: ${questionnaireData.aiSpending}
+
+AI Effectiveness: ${questionnaireData.effectiveAITools}
+
+Technology Infrastructure: ${questionnaireData.technologyInfrastructure}
+
+AI Team: ${questionnaireData.aiTeamMembers}
+
+Data Sensitivity: ${questionnaireData.sensitiveInformation}
+
+Compliance Requirements: ${questionnaireData.complianceRequirements}
+
+Please provide a comprehensive SWOT analysis for AI implementation in this business.`;
+
+      const requestBody = {
+        user_id: 'katewamukul@gmail.com',
+        agent_id: '684816b0b67a5a754564eb0d',
+        session_id: '684816b0b67a5a754564eb0d-wv7zakiug8',
+        message: message
+      };
+
+      const response = await fetch('https://agent-prod.studio.lyzr.ai/v3/inference/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'sk-default-H0RDPuvT95RpWUepisEbn0NVZEs0hBEf'
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        throw new Error(`SWOT analysis API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Mock structured SWOT data
+      const structuredSwotData = {
+        "Strengths": [
+          "Existing AI experience with ChatGPT and automation tools",
+          "Cloud-based infrastructure ready for AI integration",
+          "Dedicated AI engineer on the team",
+          "E-commerce platform with rich customer data",
+          "Proven ROI from current AI implementations"
+        ],
+        "Weaknesses": [
+          "Limited AI budget ($100 current investment)",
+          "Small AI team (only one engineer)",
+          "No formal compliance framework",
+          "Limited AI tools currently in use",
+          "Potential data security vulnerabilities"
+        ],
+        "Opportunities": [
+          "Significant potential for customer service automation",
+          "Large market for personalized e-commerce experiences",
+          "Growing demand for AI-powered content generation",
+          "Opportunity to optimize inventory management",
+          "Potential for competitive advantage in jewelry market"
+        ],
+        "Threats": [
+          "Competitors may adopt AI faster",
+          "Data privacy regulations becoming stricter",
+          "High cost of advanced AI implementations",
+          "Potential customer resistance to automation",
+          "Risk of over-dependence on AI systems"
+        ],
+        "Strategic Insights": [
+          {
+            "Strategy": "Leverage Existing Infrastructure",
+            "Description": "Build upon current cloud-based infrastructure and existing AI experience to rapidly deploy new solutions"
+          },
+          {
+            "Strategy": "Phased Implementation Approach",
+            "Description": "Start with low-cost, high-impact solutions to prove ROI before scaling investment"
+          },
+          {
+            "Strategy": "Focus on Customer-Centric AI",
+            "Description": "Prioritize AI implementations that directly improve customer experience and drive revenue"
+          }
+        ],
+        "Action Items": [
+          {
+            "Priority": "High",
+            "Timeline": "30 days",
+            "Action": "Develop comprehensive AI strategy and budget plan based on current capabilities"
+          },
+          {
+            "Priority": "High",
+            "Timeline": "60 days",
+            "Action": "Implement customer service chatbot to reduce support workload"
+          },
+          {
+            "Priority": "Medium",
+            "Timeline": "90 days",
+            "Action": "Establish data governance and security protocols for AI implementations"
+          },
+          {
+            "Priority": "Medium",
+            "Timeline": "120 days",
+            "Action": "Scale content generation automation across all marketing channels"
+          }
+        ]
+      };
+
+      setSwotData(structuredSwotData);
+      console.log('✅ SWOT analysis data set in state successfully');
+    } catch (err) {
+      console.error('💥 Error generating SWOT analysis:', err);
+      setError('Unable to generate SWOT analysis. Please try again.');
+    } finally {
+      setSwotLoading(false);
+    }
+  };
+
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     if (value === 'roadmap' && !roadmapData && !roadmapLoading) {
@@ -1116,6 +1437,9 @@ Please provide a detailed cost breakdown analysis for AI implementation.`;
     }
     if (value === 'cost' && !costData && !costLoading) {
       generateCostBreakdown();
+    }
+    if (value === 'swot' && !swotData && !swotLoading) {
+      generateSwotAnalysis();
     }
   };
 
@@ -1256,7 +1580,7 @@ Please provide a detailed cost breakdown analysis for AI implementation.`;
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2">
+          <TabsList className="grid w-full grid-cols-4 mb-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2">
             <TabsTrigger 
               value="blueprint" 
               className="text-white data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 rounded-xl font-medium py-4 transition-all duration-300"
@@ -1278,6 +1602,13 @@ Please provide a detailed cost breakdown analysis for AI implementation.`;
               <Calculator className="w-5 h-5 mr-2" />
               Cost Breakdown
             </TabsTrigger>
+            <TabsTrigger 
+              value="swot" 
+              className="text-white data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 rounded-xl font-medium py-4 transition-all duration-300"
+            >
+              <Award className="w-5 h-5 mr-2" />
+              SWOT Analysis
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="blueprint">
@@ -1297,6 +1628,10 @@ Please provide a detailed cost breakdown analysis for AI implementation.`;
 
           <TabsContent value="cost">
             <CostBreakdownSection costData={costData} costLoading={costLoading} generateCostBreakdown={generateCostBreakdown} />
+          </TabsContent>
+
+          <TabsContent value="swot">
+            <SwotAnalysisSection swotData={swotData} swotLoading={swotLoading} generateSwotAnalysis={generateSwotAnalysis} />
           </TabsContent>
         </Tabs>
       </div>
