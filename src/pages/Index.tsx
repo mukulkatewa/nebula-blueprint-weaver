@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import LandingPage from '../components/LandingPage';
 import Questionnaire from '../components/Questionnaire';
-import BlueprintResults from '../components/BlueprintResults';
+import DynamicBlueprintResults from '../components/DynamicBlueprintResults';
 
 export type QuestionnaireData = {
   businessOverview: string;
@@ -19,7 +19,6 @@ export type QuestionnaireData = {
 const Index = () => {
   const [currentStep, setCurrentStep] = useState<'landing' | 'questionnaire' | 'results'>('landing');
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData | null>(null);
-  const [blueprintData, setBlueprintData] = useState<any>(null);
 
   const handleStartJourney = () => {
     setCurrentStep('questionnaire');
@@ -33,7 +32,6 @@ const Index = () => {
   const handleBackToLanding = () => {
     setCurrentStep('landing');
     setQuestionnaireData(null);
-    setBlueprintData(null);
   };
 
   return (
@@ -48,7 +46,7 @@ const Index = () => {
         />
       )}
       {currentStep === 'results' && questionnaireData && (
-        <BlueprintResults 
+        <DynamicBlueprintResults 
           questionnaireData={questionnaireData}
           onBack={handleBackToLanding}
         />
