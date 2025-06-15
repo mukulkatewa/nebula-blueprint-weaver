@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock, Calendar, MapPin, Gauge } from 'lucide-react';
+import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock, Sparkles, Database, Users, Lock, Calendar, MapPin, Gauge, Calculator } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
 
 interface BlueprintResultsProps {
@@ -11,11 +10,614 @@ interface BlueprintResultsProps {
   onBack: () => void;
 }
 
+const BusinessAnalysis = ({ data }: { data: any }) => (
+  <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+    <CardHeader className="pb-8">
+      <CardTitle className="text-3xl text-teal-400 flex items-center gap-4 font-bold">
+        <div className="p-3 bg-teal-400/20 rounded-xl">
+          <Building2 className="w-8 h-8 text-teal-400" />
+        </div>
+        Business Intelligence Overview
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="px-8 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {Object.entries(data).map(([key, value]) => (
+          <div key={key} className="group p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-teal-400/30 transition-all duration-300 hover:scale-105">
+            <h4 className="text-teal-300 font-semibold mb-4 text-lg">{key}</h4>
+            <p className="text-white leading-relaxed">{value as string}</p>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const OpportunitiesSection = ({ opportunities }: { opportunities: any[] }) => (
+  <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+    <CardHeader className="pb-8">
+      <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
+        <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+          <Target className="w-8 h-8 text-fuchsia-400" />
+        </div>
+        AI Opportunities Constellation
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="px-8 pb-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+        {opportunities.map((opportunity: any, index: number) => (
+          <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300 hover:scale-[1.02]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                <Zap className="w-6 h-6 text-fuchsia-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-fuchsia-300">{opportunity.Category}</h3>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                  <CheckCircle className="w-4 h-4" />
+                  Justification
+                </h4>
+                <p className="text-white leading-relaxed">{opportunity.Justification}</p>
+              </div>
+              
+              <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                  <Target className="w-4 h-4" />
+                  Workflow Analysis
+                </h4>
+                <p className="text-white leading-relaxed">{opportunity['Workflow Analysis']}</p>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-6">
+                <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                  <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                    <DollarSign className="w-4 h-4" />
+                    Cost-Benefit Analysis
+                  </h4>
+                  <p className="text-white leading-relaxed">{opportunity['Cost-Benefit']}</p>
+                </div>
+                
+                <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
+                  <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                    <AlertTriangle className="w-4 h-4" />
+                    Data Security Considerations
+                  </h4>
+                  <p className="text-white leading-relaxed">{opportunity['Sensitive Data Exposure']}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const RecommendationsSection = ({ recommendations }: { recommendations: any[] }) => (
+  <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
+    <CardHeader className="pb-8">
+      <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
+        <div className="p-3 bg-emerald-400/20 rounded-xl">
+          <Rocket className="w-8 h-8 text-emerald-400" />
+        </div>
+        Strategic Implementation Roadmap
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="px-8 pb-8">
+      <div className="space-y-10">
+        {recommendations.map((rec: any, index: number) => (
+          <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border-l-4 border-emerald-400 hover:bg-white/10 transition-all duration-300">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-emerald-400/20 rounded-xl">
+                <Rocket className="w-6 h-6 text-emerald-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-emerald-300">{rec.Area}</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-6">
+                <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                  <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                    <Target className="w-4 h-4" />
+                    Action Plan
+                  </h4>
+                  <p className="text-white leading-relaxed">{rec.Action}</p>
+                </div>
+                
+                <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
+                  <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                    <AlertTriangle className="w-4 h-4" />
+                    Key Considerations
+                  </h4>
+                  <p className="text-white leading-relaxed">{rec.Considerations}</p>
+                </div>
+              </div>
+              
+              <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
+                <h4 className="text-sm font-semibold text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
+                  <DollarSign className="w-4 h-4" />
+                  Expected Savings
+                </h4>
+                <p className="text-white leading-relaxed font-medium text-lg">{rec['Cost Savings']}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const QuickWins = ({ quickWins }: { quickWins: any[] }) => (
+  <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+    <CardHeader className="pb-8">
+      <CardTitle className="text-3xl text-yellow-400 flex items-center gap-4 font-bold">
+        <div className="p-3 bg-yellow-400/20 rounded-xl">
+          <TrendingUp className="w-8 h-8 text-yellow-400" />
+        </div>
+        Quick Wins - Immediate Actions
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="px-8 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {quickWins.map((win: any, index: number) => (
+          <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-yellow-400/30 transition-all duration-300 hover:scale-105">
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-3 bg-yellow-400/20 rounded-xl">
+                <Lightbulb className="w-6 h-6 text-yellow-400" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-teal-400" />
+                <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
+                  win.Effort === 'Low' 
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30' 
+                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
+                }`}>
+                  {win.Effort} Effort
+                </span>
+              </div>
+            </div>
+            
+            <h4 className="text-xl font-bold text-yellow-300 mb-4">Quick Win #{index + 1}</h4>
+            
+            <div className="space-y-4">
+              <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                <p className="text-white leading-relaxed">{win.Optimization}</p>
+              </div>
+              
+              <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Expected Benefit</h5>
+                <p className="text-emerald-300 font-medium">{win.Benefit}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const RoadmapSection = ({ roadmapData, loading }: { roadmapData: any; loading: boolean }) => {
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-fuchsia-400/20 mb-6">
+            <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6 animate-pulse" />
+            <h3 className="text-2xl font-bold text-white mb-4">Generating Implementation Roadmap</h3>
+            <p className="text-gray-300">Creating your detailed implementation plan...</p>
+            <div className="mt-6 flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-fuchsia-400/30 border-t-fuchsia-400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!roadmapData) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6" />
+          <h3 className="text-2xl font-bold text-white mb-4">Implementation Roadmap</h3>
+          <p className="text-gray-300 mb-8">Click to generate your detailed implementation plan</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-16">
+      {/* Timeline Overview */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+              <Calendar className="w-8 h-8 text-fuchsia-400" />
+            </div>
+            Implementation Timeline
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="p-8 bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 rounded-2xl border border-fuchsia-400/20">
+              <h3 className="text-2xl font-bold text-fuchsia-300 mb-2">Total Duration</h3>
+              <p className="text-4xl font-bold text-white">{roadmapData.Timeline}</p>
+            </div>
+            <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
+              <h3 className="text-2xl font-bold text-emerald-300 mb-2">Total Investment</h3>
+              <p className="text-4xl font-bold text-white">{roadmapData['Total Budget']}</p>
+            </div>
+          </div>
+
+          {/* Phases */}
+          <div className="space-y-8">
+            {roadmapData.Phases.map((phase: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-fuchsia-400/20 rounded-xl">
+                    <Gauge className="w-6 h-6 text-fuchsia-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-fuchsia-300">{phase.Phase}</h3>
+                    <div className="flex items-center gap-4 mt-2">
+                      <span className="text-gray-300">{phase.Duration}</span>
+                      <span className="text-emerald-400 font-semibold">{phase.Budget}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                    <h4 className="text-teal-400 font-semibold mb-4 flex items-center gap-2">
+                      <Target className="w-4 h-4" />
+                      Objectives
+                    </h4>
+                    <ul className="space-y-2">
+                      {phase.Objectives.map((obj: string, objIndex: number) => (
+                        <li key={objIndex} className="text-white leading-relaxed flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-teal-400 mt-0.5 flex-shrink-0" />
+                          {obj}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                    <h4 className="text-yellow-400 font-semibold mb-4 flex items-center gap-2">
+                      <Rocket className="w-4 h-4" />
+                      Deliverables
+                    </h4>
+                    <ul className="space-y-2">
+                      {phase.Deliverables.map((deliverable: string, delIndex: number) => (
+                        <li key={delIndex} className="text-white leading-relaxed flex items-start gap-2">
+                          <Star className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                          {deliverable}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                    <h4 className="text-purple-400 font-semibold mb-4 flex items-center gap-2">
+                      <Users className="w-4 h-4" />
+                      Resources
+                    </h4>
+                    <ul className="space-y-2">
+                      {phase.Resources.map((resource: string, resIndex: number) => (
+                        <li key={resIndex} className="text-white leading-relaxed flex items-start gap-2">
+                          <Users className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                          {resource}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Key Milestones */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-emerald-400/20 rounded-xl">
+              <Target className="w-8 h-8 text-emerald-400" />
+            </div>
+            Key Milestones
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {roadmapData['Key Milestones'].map((milestone: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-emerald-400/20 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-emerald-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-emerald-300">{milestone.Milestone}</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-teal-400" />
+                    <span className="text-teal-400 font-semibold">{milestone['Target Date']}</span>
+                  </div>
+                  <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Success Metrics</h5>
+                    <p className="text-white font-medium">{milestone['Success Metrics']}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Risk Assessment */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-amber-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-amber-400/20 rounded-xl">
+              <Shield className="w-8 h-8 text-amber-400" />
+            </div>
+            Risk Assessment & Mitigation
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="space-y-6">
+            {roadmapData['Risk Assessment'].map((risk: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-amber-400/30 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-amber-400/20 rounded-xl">
+                      <AlertTriangle className="w-6 h-6 text-amber-400" />
+                    </div>
+                    <h3 className="text-xl font-bold text-amber-300">{risk.Risk}</h3>
+                  </div>
+                  <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
+                    risk.Impact === 'High' 
+                      ? 'bg-red-500/20 text-red-400 border border-red-400/30'
+                      : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
+                  }`}>
+                    {risk.Impact} Impact
+                  </span>
+                </div>
+                <div className="p-6 bg-white/5 rounded-xl border border-white/10">
+                  <h4 className="text-teal-400 font-semibold mb-3 flex items-center gap-2">
+                    <Shield className="w-4 h-4" />
+                    Mitigation Strategy
+                  </h4>
+                  <p className="text-white leading-relaxed">{risk.Mitigation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+const CostBreakdownSection = ({ costData, costLoading, generateCostBreakdown }: { costData: any; costLoading: boolean; generateCostBreakdown: () => void }) => {
+  if (costLoading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-emerald-400/20 mb-6">
+            <Calculator className="w-16 h-16 text-emerald-400 mx-auto mb-6 animate-pulse" />
+            <h3 className="text-2xl font-bold text-white mb-4">Generating Cost Analysis</h3>
+            <p className="text-gray-300">Calculating investment and ROI projections...</p>
+            <div className="mt-6 flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-emerald-400/30 border-t-emerald-400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!costData) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="text-center">
+          <Calculator className="w-16 h-16 text-emerald-400 mx-auto mb-6" />
+          <h3 className="text-2xl font-bold text-white mb-4">Cost Breakdown Analysis</h3>
+          <p className="text-gray-300 mb-8">Click to generate your detailed cost analysis and ROI projections</p>
+          <Button 
+            onClick={generateCostBreakdown}
+            className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 text-white px-8 py-4 rounded-xl font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          >
+            <Calculator className="w-5 h-5 mr-2" />
+            Generate Cost Analysis
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-16">
+      {/* Financial Overview */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-emerald-400/20 rounded-xl">
+              <DollarSign className="w-8 h-8 text-emerald-400" />
+            </div>
+            Financial Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
+              <h3 className="text-lg font-semibold text-emerald-300 mb-2">Total Investment</h3>
+              <p className="text-4xl font-bold text-white">{costData['Total Investment']}</p>
+            </div>
+            <div className="p-8 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-400/20">
+              <h3 className="text-lg font-semibold text-blue-300 mb-2">ROI Projection</h3>
+              <p className="text-4xl font-bold text-white">{costData['ROI Projection']}</p>
+            </div>
+            <div className="p-8 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl border border-orange-400/20">
+              <h3 className="text-lg font-semibold text-orange-300 mb-2">Payback Period</h3>
+              <p className="text-4xl font-bold text-white">{costData['Payback Period']}</p>
+            </div>
+            <div className="p-8 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-400/20">
+              <h3 className="text-lg font-semibold text-green-300 mb-2">Annual Savings</h3>
+              <p className="text-4xl font-bold text-white">{costData['Annual Savings']}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Implementation Costs */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-blue-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-blue-400/20 rounded-xl">
+              <Building2 className="w-8 h-8 text-blue-400" />
+            </div>
+            Implementation Costs
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {costData['Implementation Costs'].map((category: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-blue-400/30 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-blue-300">{category.Category}</h3>
+                  <span className="text-2xl font-bold text-emerald-400">{category.Amount}</span>
+                </div>
+                <div className="space-y-4">
+                  {category.Breakdown.map((item: any, itemIndex: number) => (
+                    <div key={itemIndex} className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/10">
+                      <span className="text-white">{item.Item}</span>
+                      <span className="text-emerald-400 font-semibold">{item.Cost}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Cost Savings Analysis */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-green-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-green-400/20 rounded-xl">
+              <TrendingUp className="w-8 h-8 text-green-400" />
+            </div>
+            Cost Savings Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {costData['Cost Savings Analysis'].map((saving: any, index: number) => (
+              <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-green-400/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-green-400/20 rounded-xl">
+                    <DollarSign className="w-6 h-6 text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-green-300">{saving.Area}</h3>
+                    <p className="text-2xl font-bold text-emerald-400">{saving['Annual Savings']}</p>
+                  </div>
+                </div>
+                <p className="text-white leading-relaxed">{saving.Description}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Financial Projections */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-purple-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-purple-400/20 rounded-xl">
+              <TrendingUp className="w-8 h-8 text-purple-400" />
+            </div>
+            3-Year Financial Projections
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {Object.entries(costData['Financial Projections']).map(([year, data]: [string, any]) => (
+              <div key={year} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-purple-400/30 transition-all duration-300">
+                <h3 className="text-2xl font-bold text-purple-300 mb-6">{year}</h3>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300">Investment</span>
+                    <span className="text-red-400 font-semibold">{data.Investment}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300">Savings</span>
+                    <span className="text-green-400 font-semibold">{data.Savings}</span>
+                  </div>
+                  <div className="border-t border-white/10 pt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white font-semibold">Net Result</span>
+                      <span className={`font-bold text-xl ${data.Net.startsWith('-') ? 'text-red-400' : 'text-green-400'}`}>
+                        {data.Net}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Operational Costs */}
+      <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-3xl text-orange-400 flex items-center gap-4 font-bold">
+            <div className="p-3 bg-orange-400/20 rounded-xl">
+              <Clock className="w-8 h-8 text-orange-400" />
+            </div>
+            Ongoing Operational Costs
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-8 pb-8">
+          {costData['Operational Costs'].map((category: any, index: number) => (
+            <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-orange-300">{category.Category}</h3>
+                <span className="text-2xl font-bold text-orange-400">{category.Amount}</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {category.Items.map((item: any, itemIndex: number) => (
+                  <div key={itemIndex} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div className="text-center">
+                      <p className="text-white mb-2">{item.Item}</p>
+                      <p className="text-orange-400 font-semibold">{item.Cost}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 const BlueprintResults = ({ questionnaireData, onBack }: BlueprintResultsProps) => {
   const [blueprintData, setBlueprintData] = useState<any>(null);
   const [roadmapData, setRoadmapData] = useState<any>(null);
+  const [costData, setCostData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [roadmapLoading, setRoadmapLoading] = useState(false);
+  const [costLoading, setCostLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('blueprint');
 
@@ -340,7 +942,7 @@ Please provide a detailed implementation roadmap for AI integration.`;
           }
         ]
       };
-
+      
       setRoadmapData(structuredRoadmapData);
       console.log('✅ Roadmap data set in state successfully');
     } catch (err) {
@@ -351,10 +953,169 @@ Please provide a detailed implementation roadmap for AI integration.`;
     }
   };
 
+  const generateCostBreakdown = async () => {
+    if (costData) return; // Don't regenerate if already exists
+    
+    try {
+      console.log('🔄 Starting cost breakdown generation process...');
+      setCostLoading(true);
+      
+      const message = `Cost Breakdown Analysis Request:
+
+Business Overview: ${questionnaireData.businessOverview}
+
+Current AI Tools: ${questionnaireData.currentAITools}
+
+AI Usage Areas: ${questionnaireData.aiUsageAreas}
+
+AI Investment: ${questionnaireData.aiSpending}
+
+AI Effectiveness: ${questionnaireData.effectiveAITools}
+
+Technology Infrastructure: ${questionnaireData.technologyInfrastructure}
+
+AI Team: ${questionnaireData.aiTeamMembers}
+
+Data Sensitivity: ${questionnaireData.sensitiveInformation}
+
+Compliance Requirements: ${questionnaireData.complianceRequirements}
+
+Please provide a detailed cost breakdown analysis for AI implementation.`;
+
+      const requestBody = {
+        user_id: 'katewamukul@gmail.com',
+        agent_id: '68481c3db67a5a754564ec0b',
+        session_id: '68481c3db67a5a754564ec0b-uzi1zvjh2s9',
+        message: message
+      };
+
+      const response = await fetch('https://agent-prod.studio.lyzr.ai/v3/inference/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'sk-default-H0RDPuvT95RpWUepisEbn0NVZEs0hBEf'
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Cost breakdown API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Mock structured cost breakdown data
+      const structuredCostData = {
+        "Total Investment": "$75,000",
+        "ROI Projection": "325% over 24 months",
+        "Payback Period": "8 months",
+        "Annual Savings": "$120,000",
+        "Implementation Costs": [
+          {
+            "Category": "Software & Licensing",
+            "Amount": "$25,000",
+            "Breakdown": [
+              { "Item": "AI Platform Licenses", "Cost": "$15,000" },
+              { "Item": "Development Tools", "Cost": "$5,000" },
+              { "Item": "Security & Compliance Tools", "Cost": "$5,000" }
+            ]
+          },
+          {
+            "Category": "Personnel & Training",
+            "Amount": "$30,000",
+            "Breakdown": [
+              { "Item": "AI Engineer Salary (6 months)", "Cost": "$20,000" },
+              { "Item": "Team Training Programs", "Cost": "$7,000" },
+              { "Item": "Consultant Fees", "Cost": "$3,000" }
+            ]
+          },
+          {
+            "Category": "Infrastructure & Integration",
+            "Amount": "$15,000",
+            "Breakdown": [
+              { "Item": "Cloud Infrastructure", "Cost": "$8,000" },
+              { "Item": "API Integration", "Cost": "$4,000" },
+              { "Item": "Data Migration", "Cost": "$3,000" }
+            ]
+          },
+          {
+            "Category": "Contingency & Misc",
+            "Amount": "$5,000",
+            "Breakdown": [
+              { "Item": "Project Management", "Cost": "$3,000" },
+              { "Item": "Testing & QA", "Cost": "$2,000" }
+            ]
+          }
+        ],
+        "Operational Costs": [
+          {
+            "Category": "Monthly Recurring",
+            "Amount": "$2,500/month",
+            "Items": [
+              { "Item": "AI Platform Subscriptions", "Cost": "$1,200/month" },
+              { "Item": "Cloud Hosting", "Cost": "$800/month" },
+              { "Item": "Support & Maintenance", "Cost": "$500/month" }
+            ]
+          }
+        ],
+        "Cost Savings Analysis": [
+          {
+            "Area": "Customer Service Automation",
+            "Annual Savings": "$45,000",
+            "Description": "30% reduction in customer service workload through AI chatbot implementation"
+          },
+          {
+            "Area": "Content Generation Efficiency",
+            "Annual Savings": "$35,000",
+            "Description": "50% faster content creation saving 15 hours/week of manual work"
+          },
+          {
+            "Area": "Inventory Optimization",
+            "Annual Savings": "$25,000",
+            "Description": "AI-driven inventory management reducing storage costs and stockouts"
+          },
+          {
+            "Area": "Marketing ROI Improvement",
+            "Annual Savings": "$15,000",
+            "Description": "Improved targeting and personalization increasing conversion rates"
+          }
+        ],
+        "Financial Projections": {
+          "Year 1": {
+            "Investment": "$75,000",
+            "Savings": "$60,000",
+            "Net": "-$15,000"
+          },
+          "Year 2": {
+            "Investment": "$30,000",
+            "Savings": "$120,000",
+            "Net": "$90,000"
+          },
+          "Year 3": {
+            "Investment": "$30,000",
+            "Savings": "$150,000",
+            "Net": "$120,000"
+          }
+        }
+      };
+
+      setCostData(structuredCostData);
+      console.log('✅ Cost breakdown data set in state successfully');
+    } catch (err) {
+      console.error('💥 Error generating cost breakdown:', err);
+      setError('Unable to generate cost breakdown analysis. Please try again.');
+    } finally {
+      setCostLoading(false);
+    }
+  };
+
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     if (value === 'roadmap' && !roadmapData && !roadmapLoading) {
       generateRoadmap();
+    }
+    if (value === 'cost' && !costData && !costLoading) {
+      generateCostBreakdown();
     }
   };
 
@@ -495,7 +1256,7 @@ Please provide a detailed implementation roadmap for AI integration.`;
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2">
+          <TabsList className="grid w-full grid-cols-3 mb-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2">
             <TabsTrigger 
               value="blueprint" 
               className="text-white data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 rounded-xl font-medium py-4 transition-all duration-300"
@@ -510,397 +1271,32 @@ Please provide a detailed implementation roadmap for AI integration.`;
               <MapPin className="w-5 h-5 mr-2" />
               Implementation Roadmap
             </TabsTrigger>
+            <TabsTrigger 
+              value="cost" 
+              className="text-white data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 rounded-xl font-medium py-4 transition-all duration-300"
+            >
+              <Calculator className="w-5 h-5 mr-2" />
+              Cost Breakdown
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="blueprint">
-            {/* Business Analysis */}
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-              <CardHeader className="pb-8">
-                <CardTitle className="text-3xl text-teal-400 flex items-center gap-4 font-bold">
-                  <div className="p-3 bg-teal-400/20 rounded-xl">
-                    <Building2 className="w-8 h-8 text-teal-400" />
-                  </div>
-                  Business Intelligence Overview
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-8 pb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {Object.entries(blueprintData['Business Analysis']).map(([key, value]) => (
-                    <div key={key} className="group p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-teal-400/30 transition-all duration-300 hover:scale-105">
-                      <h4 className="text-teal-300 font-semibold mb-4 text-lg">{key}</h4>
-                      <p className="text-white leading-relaxed">{value as string}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* AI Opportunities */}
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-              <CardHeader className="pb-8">
-                <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
-                  <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                    <Target className="w-8 h-8 text-fuchsia-400" />
-                  </div>
-                  AI Opportunities Constellation
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-8 pb-8">
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                  {blueprintData.Opportunities.map((opportunity: any, index: number) => (
-                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300 hover:scale-[1.02]">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                          <Zap className="w-6 h-6 text-fuchsia-400" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-fuchsia-300">{opportunity.Category}</h3>
-                      </div>
-                      
-                      <div className="space-y-6">
-                        <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                          <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                            <CheckCircle className="w-4 h-4" />
-                            Justification
-                          </h4>
-                          <p className="text-white leading-relaxed">{opportunity.Justification}</p>
-                        </div>
-                        
-                        <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                          <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                            <Target className="w-4 h-4" />
-                            Workflow Analysis
-                          </h4>
-                          <p className="text-white leading-relaxed">{opportunity['Workflow Analysis']}</p>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 gap-6">
-                          <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                            <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                              <DollarSign className="w-4 h-4" />
-                              Cost-Benefit Analysis
-                            </h4>
-                            <p className="text-white leading-relaxed">{opportunity['Cost-Benefit']}</p>
-                          </div>
-                          
-                          <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
-                            <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                              <AlertTriangle className="w-4 h-4" />
-                              Data Security Considerations
-                            </h4>
-                            <p className="text-white leading-relaxed">{opportunity['Sensitive Data Exposure']}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Strategic Recommendations */}
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl mb-16 rounded-2xl hover:bg-white/10 transition-all duration-500">
-              <CardHeader className="pb-8">
-                <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
-                  <div className="p-3 bg-emerald-400/20 rounded-xl">
-                    <Rocket className="w-8 h-8 text-emerald-400" />
-                  </div>
-                  Strategic Implementation Roadmap
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-8 pb-8">
-                <div className="space-y-10">
-                  {blueprintData.Recommendations.map((rec: any, index: number) => (
-                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border-l-4 border-emerald-400 hover:bg-white/10 transition-all duration-300">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-emerald-400/20 rounded-xl">
-                          <Rocket className="w-6 h-6 text-emerald-400" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-emerald-300">{rec.Area}</h3>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div className="lg:col-span-2 space-y-6">
-                          <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                            <h4 className="text-sm font-semibold text-teal-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                              <Target className="w-4 h-4" />
-                              Action Plan
-                            </h4>
-                            <p className="text-white leading-relaxed">{rec.Action}</p>
-                          </div>
-                          
-                          <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-400/20">
-                            <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
-                              <AlertTriangle className="w-4 h-4" />
-                              Key Considerations
-                            </h4>
-                            <p className="text-white leading-relaxed">{rec.Considerations}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
-                          <h4 className="text-sm font-semibold text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
-                            <DollarSign className="w-4 h-4" />
-                            Expected Savings
-                          </h4>
-                          <p className="text-white leading-relaxed font-medium text-lg">{rec['Cost Savings']}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Wins */}
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
-              <CardHeader className="pb-8">
-                <CardTitle className="text-3xl text-yellow-400 flex items-center gap-4 font-bold">
-                  <div className="p-3 bg-yellow-400/20 rounded-xl">
-                    <TrendingUp className="w-8 h-8 text-yellow-400" />
-                  </div>
-                  Quick Wins - Immediate Actions
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-8 pb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {blueprintData['Quick Wins'].map((win: any, index: number) => (
-                    <div key={index} className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-yellow-400/30 transition-all duration-300 hover:scale-105">
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="p-3 bg-yellow-400/20 rounded-xl">
-                          <Lightbulb className="w-6 h-6 text-yellow-400" />
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-teal-400" />
-                          <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
-                            win.Effort === 'Low' 
-                              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30' 
-                              : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
-                          }`}>
-                            {win.Effort} Effort
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <h4 className="text-xl font-bold text-yellow-300 mb-4">Quick Win #{index + 1}</h4>
-                      
-                      <div className="space-y-4">
-                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                          <p className="text-white leading-relaxed">{win.Optimization}</p>
-                        </div>
-                        
-                        <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                          <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Expected Benefit</h5>
-                          <p className="text-emerald-300 font-medium">{win.Benefit}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {blueprintData && (
+              <>
+                <BusinessAnalysis data={blueprintData['Business Analysis']} />
+                <OpportunitiesSection opportunities={blueprintData.Opportunities} />
+                <RecommendationsSection recommendations={blueprintData.Recommendations} />
+                <QuickWins quickWins={blueprintData['Quick Wins']} />
+              </>
+            )}
           </TabsContent>
 
           <TabsContent value="roadmap">
-            {roadmapLoading ? (
-              <div className="flex items-center justify-center py-32">
-                <div className="text-center">
-                  <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-fuchsia-400/20 mb-6">
-                    <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6 animate-pulse" />
-                    <h3 className="text-2xl font-bold text-white mb-4">Generating Implementation Roadmap</h3>
-                    <p className="text-gray-300">Creating your detailed implementation plan...</p>
-                    <div className="mt-6 flex justify-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-2 border-fuchsia-400/30 border-t-fuchsia-400"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : roadmapData ? (
-              <div className="space-y-16">
-                {/* Timeline Overview */}
-                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
-                  <CardHeader className="pb-8">
-                    <CardTitle className="text-3xl text-fuchsia-400 flex items-center gap-4 font-bold">
-                      <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                        <Calendar className="w-8 h-8 text-fuchsia-400" />
-                      </div>
-                      Implementation Timeline
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-8 pb-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                      <div className="p-8 bg-gradient-to-br from-fuchsia-500/10 to-purple-500/10 rounded-2xl border border-fuchsia-400/20">
-                        <h3 className="text-2xl font-bold text-fuchsia-300 mb-2">Total Duration</h3>
-                        <p className="text-4xl font-bold text-white">{roadmapData.Timeline}</p>
-                      </div>
-                      <div className="p-8 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-emerald-400/20">
-                        <h3 className="text-2xl font-bold text-emerald-300 mb-2">Total Investment</h3>
-                        <p className="text-4xl font-bold text-white">{roadmapData['Total Budget']}</p>
-                      </div>
-                    </div>
+            <RoadmapSection roadmapData={roadmapData} loading={roadmapLoading} />
+          </TabsContent>
 
-                    {/* Phases */}
-                    <div className="space-y-8">
-                      {roadmapData.Phases.map((phase: any, index: number) => (
-                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-300">
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className="p-3 bg-fuchsia-400/20 rounded-xl">
-                              <Gauge className="w-6 h-6 text-fuchsia-400" />
-                            </div>
-                            <div>
-                              <h3 className="text-2xl font-bold text-fuchsia-300">{phase.Phase}</h3>
-                              <div className="flex items-center gap-4 mt-2">
-                                <span className="text-gray-300">{phase.Duration}</span>
-                                <span className="text-emerald-400 font-semibold">{phase.Budget}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                              <h4 className="text-teal-400 font-semibold mb-4 flex items-center gap-2">
-                                <Target className="w-4 h-4" />
-                                Objectives
-                              </h4>
-                              <ul className="space-y-2">
-                                {phase.Objectives.map((obj: string, objIndex: number) => (
-                                  <li key={objIndex} className="text-white leading-relaxed flex items-start gap-2">
-                                    <CheckCircle className="w-4 h-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                                    {obj}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                              <h4 className="text-yellow-400 font-semibold mb-4 flex items-center gap-2">
-                                <Rocket className="w-4 h-4" />
-                                Deliverables
-                              </h4>
-                              <ul className="space-y-2">
-                                {phase.Deliverables.map((deliverable: string, delIndex: number) => (
-                                  <li key={delIndex} className="text-white leading-relaxed flex items-start gap-2">
-                                    <Star className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                                    {deliverable}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                              <h4 className="text-purple-400 font-semibold mb-4 flex items-center gap-2">
-                                <Users className="w-4 h-4" />
-                                Resources
-                              </h4>
-                              <ul className="space-y-2">
-                                {phase.Resources.map((resource: string, resIndex: number) => (
-                                  <li key={resIndex} className="text-white leading-relaxed flex items-start gap-2">
-                                    <Users className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                                    {resource}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Key Milestones */}
-                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
-                  <CardHeader className="pb-8">
-                    <CardTitle className="text-3xl text-emerald-400 flex items-center gap-4 font-bold">
-                      <div className="p-3 bg-emerald-400/20 rounded-xl">
-                        <Target className="w-8 h-8 text-emerald-400" />
-                      </div>
-                      Key Milestones
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-8 pb-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {roadmapData['Key Milestones'].map((milestone: any, index: number) => (
-                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:scale-105">
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-emerald-400/20 rounded-xl">
-                              <CheckCircle className="w-6 h-6 text-emerald-400" />
-                            </div>
-                            <h3 className="text-xl font-bold text-emerald-300">{milestone.Milestone}</h3>
-                          </div>
-                          <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-teal-400" />
-                              <span className="text-teal-400 font-semibold">{milestone['Target Date']}</span>
-                            </div>
-                            <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                              <h5 className="text-xs font-semibold text-emerald-400 mb-2 uppercase tracking-wide">Success Metrics</h5>
-                              <p className="text-white font-medium">{milestone['Success Metrics']}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Risk Assessment */}
-                <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl hover:bg-white/10 transition-all duration-500">
-                  <CardHeader className="pb-8">
-                    <CardTitle className="text-3xl text-amber-400 flex items-center gap-4 font-bold">
-                      <div className="p-3 bg-amber-400/20 rounded-xl">
-                        <Shield className="w-8 h-8 text-amber-400" />
-                      </div>
-                      Risk Assessment & Mitigation
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-8 pb-8">
-                    <div className="space-y-6">
-                      {roadmapData['Risk Assessment'].map((risk: any, index: number) => (
-                        <div key={index} className="p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-amber-400/30 transition-all duration-300">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center gap-4">
-                              <div className="p-3 bg-amber-400/20 rounded-xl">
-                                <AlertTriangle className="w-6 h-6 text-amber-400" />
-                              </div>
-                              <h3 className="text-xl font-bold text-amber-300">{risk.Risk}</h3>
-                            </div>
-                            <span className={`px-4 py-2 text-sm font-semibold rounded-full ${
-                              risk.Impact === 'High' 
-                                ? 'bg-red-500/20 text-red-400 border border-red-400/30'
-                                : 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/30'
-                            }`}>
-                              {risk.Impact} Impact
-                            </span>
-                          </div>
-                          <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-                            <h4 className="text-teal-400 font-semibold mb-3 flex items-center gap-2">
-                              <Shield className="w-4 h-4" />
-                              Mitigation Strategy
-                            </h4>
-                            <p className="text-white leading-relaxed">{risk.Mitigation}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center py-32">
-                <div className="text-center">
-                  <MapPin className="w-16 h-16 text-fuchsia-400 mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-white mb-4">Implementation Roadmap</h3>
-                  <p className="text-gray-300 mb-8">Click to generate your detailed implementation plan</p>
-                  <Button 
-                    onClick={generateRoadmap}
-                    className="bg-gradient-to-r from-fuchsia-500 to-purple-500 hover:from-fuchsia-400 hover:to-purple-400 text-white px-8 py-4 rounded-xl font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                  >
-                    <Rocket className="w-5 h-5 mr-2" />
-                    Generate Roadmap
-                  </Button>
-                </div>
-              </div>
-            )}
+          <TabsContent value="cost">
+            <CostBreakdownSection costData={costData} costLoading={costLoading} generateCostBreakdown={generateCostBreakdown} />
           </TabsContent>
         </Tabs>
       </div>
