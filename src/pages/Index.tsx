@@ -1,12 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from 'react';
+import LandingPage from '../components/LandingPage';
+import Questionnaire from '../components/Questionnaire';
+import BlueprintResults from '../components/BlueprintResults';
+
+export type QuestionnaireData = {
+  businessOverview: string;
+  currentAITools: string;
+  aiUsageAreas: string;
+  aiSpending: string;
+  effectiveAITools: string;
+  technologyInfrastructure: string;
+  aiTeamMembers: string;
+  sensitiveInformation: string;
+  complianceRequirements: string;
+};
 
 const Index = () => {
+  const [currentStep, setCurrentStep] = useState<'landing' | 'questionnaire' | 'results'>('landing');
+  const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData | null>(null);
+  const [blueprintData, setBlueprintData] = useState<any>(null);
+
+  const handleStartJourney = () => {
+    setCurrentStep('questionnaire');
+  };
+
+  const handleQuestionnaireComplete = (data: QuestionnaireData) => {
+    setQuestionnaireData(data);
+    setCurrentStep('results');
+  };
+
+  const handleBackToLanding = () => {
+    setCurrentStep('landing');
+    setQuestionnaireData(null);
+    setBlueprintData(null);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black">
+      {currentStep === 'landing' && (
+        <LandingPage onStartJourney={handleStartJourney} />
+      )}
+      {currentStep === 'questionnaire' && (
+        <Questionnaire 
+          onComplete={handleQuestionnaireComplete}
+          onBack={handleBackToLanding}
+        />
+      )}
+      {currentStep === 'results' && questionnaireData && (
+        <BlueprintResults 
+          questionnaireData={questionnaireData}
+          onBack={handleBackToLanding}
+        />
+      )}
     </div>
   );
 };
