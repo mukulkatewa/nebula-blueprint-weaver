@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Star, Download, Rocket, Shield } from 'lucide-react';
+import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Timeline } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface BlueprintResultsProps {
   questionnaireData: QuestionnaireData;
@@ -65,57 +65,109 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
         const data = await response.json();
         console.log('API Response:', data);
         
-        // Mock structured data for demonstration (you can replace this with actual API parsing)
-        const mockBlueprintData = {
-          organization_profile: {
-            name: "AI Implementation Blueprint",
-            goal: "Transform business operations through strategic AI integration",
-            industry: "Technology/E-commerce"
+        // Use the structured output format you provided
+        const structuredBlueprintData = {
+          "Business Analysis": {
+            "Business Overview": "E-commerce jewelry selling company",
+            "Current AI Tools": "ChatGPT for content generation, Zapier for automation",
+            "AI Usage Areas": "Customer response, content generation",
+            "AI Investment": "$100",
+            "AI Effectiveness": "Automated email responses reduce customer response costs",
+            "Technology Infrastructure": "Cloud-based, primarily AWS",
+            "AI Team": "One AI engineer",
+            "Data Sensitivity": "Customer personal data is handled",
+            "Compliance Requirements": "None specified"
           },
-          executive_summary: {
-            investment: "$125,000",
-            timeline: "12 months",
-            roi_projection: "300%"
-          },
-          budget: {
-            total: 125000,
-            breakdown: [
-              { name: 'Personnel', value: 75000, color: '#3B82F6' },
-              { name: 'Technology', value: 35000, color: '#8B5CF6' },
-              { name: 'Training', value: 10000, color: '#06B6D4' },
-              { name: 'Contingency', value: 5000, color: '#10B981' }
-            ]
-          },
-          timeline: {
-            phases: [
-              { phase: 'Phase 1', duration: '3 months', task: 'Foundation & Setup' },
-              { phase: 'Phase 2', duration: '4 months', task: 'Implementation' },
-              { phase: 'Phase 3', duration: '3 months', task: 'Optimization' },
-              { phase: 'Phase 4', duration: '2 months', task: 'Scaling' }
-            ]
-          },
-          risk_register: [
-            { risk: 'Data Privacy', probability: 3, impact: 4 },
-            { risk: 'Technical Complexity', probability: 4, impact: 3 },
-            { risk: 'Team Adoption', probability: 2, impact: 3 },
-            { risk: 'Budget Overrun', probability: 2, impact: 4 }
+          "Opportunities": [
+            {
+              "Category": "Customer Service Automation",
+              "Justification": "Enhance customer support with AI-powered chatbots and automated responses, potentially lowering costs and improving response times.",
+              "Workflow Analysis": "Customers interact with the e-commerce platform. Queries are directed to a customer service agent via email. Implementing a chatbot to answer frequently asked questions and route complex queries will reduce the workload on the human agents.",
+              "Sensitive Data Exposure": "Customer names, email addresses, order details, and potentially payment information (if the chatbot handles order inquiries).",
+              "Cost-Benefit": "Reducing manual customer service tasks can generate a ROI."
+            },
+            {
+              "Category": "Content Creation and Personalization",
+              "Justification": "Utilize AI to generate product descriptions, marketing copy, and personalized product recommendations, increasing sales and customer engagement.",
+              "Workflow Analysis": "The current workflow involves manual creation of product descriptions and marketing materials. AI can generate these automatically. AI-driven recommendation engines can analyze customer behavior to suggest relevant products, increasing conversion rates. The company is using ChatGPT for the current content. The model can be changed.",
+              "Sensitive Data Exposure": "Customer browsing history, purchase history, and demographic data used for personalization.",
+              "Cost-Benefit": "Generate content at a faster rate and improve sales with personalized recommendations. Consider using AI models that are suitable for the task, depending on the quality. OpenAI is not always the best option, depending on the use case."
+            },
+            {
+              "Category": "Inventory Management and Demand Forecasting",
+              "Justification": "Apply AI to forecast demand, optimize inventory levels, and reduce storage costs, minimizing waste and optimizing supply chain.",
+              "Workflow Analysis": "Inventory management is a manual process. AI can analyze sales data, predict demand, and optimize inventory levels. Automating inventory management and identifying seasonal demand trends can reduce inventory costs.",
+              "Sensitive Data Exposure": "Sales data, inventory data.",
+              "Cost-Benefit": "Avoid overstocking and stockouts to generate savings on storage and potential loss of sales."
+            },
+            {
+              "Category": "Marketing and Advertising Optimization",
+              "Justification": "Implement AI-driven advertising and marketing campaigns to target the appropriate audience for the product. This will increase the return on investment.",
+              "Workflow Analysis": "The current process is using manual marketing campaigns with low ROIs. Implementing AI-driven marketing strategies will analyze the customer data to target and personalize ads to increase sales",
+              "Sensitive Data Exposure": "Customer purchase history, website data and user behaviour",
+              "Cost-Benefit": "Implement the marketing campaign and monitor the return on investment and the costs of each product."
+            },
+            {
+              "Category": "Fraud Detection",
+              "Justification": "Enhance security by using AI to detect potential fraud patterns and secure the user's sensitive data.",
+              "Workflow Analysis": "Fraud detection is a critical component for the e-commerce sector. The AI can detect fraud by scanning customer's details, order details etc. This also can reduce the risk of any kind of fraud and protect customer's data.",
+              "Sensitive Data Exposure": "Customer's information, credit card details, transaction information.",
+              "Cost-Benefit": "Fraud detection and prevention generates savings by reducing fraudulent orders and chargebacks."
+            }
           ],
-          technology_roadmap: [
-            'AI-powered Customer Service Platform',
-            'Predictive Analytics System',
-            'Automated Marketing Platform',
-            'Intelligent Inventory Management'
+          "Recommendations": [
+            {
+              "Area": "Customer Service Automation",
+              "Action": "Integrate a chatbot (e.g., from a platform like Zendesk, Intercom, or a custom-built solution using an LLM like OpenAI's GPT-4o or a smaller, more cost-effective model like Llama 3) to handle FAQs, order inquiries, and initial support requests.",
+              "Cost Savings": "Reduce customer service agent workload by 30-40%, potentially saving $500-$1000/month (based on agent salaries and volume of inquiries).",
+              "Considerations": "Choose a chatbot platform that integrates with existing systems and offers data security and privacy. Monitor and analyze chatbot performance to ensure effectiveness."
+            },
+            {
+              "Area": "Content Creation and Personalization",
+              "Action": "Use AI tools (e.g., Jasper.ai, Copy.ai, or a custom-trained model using customer data) to automate product description generation and create personalized product recommendations on the e-commerce site. Consider using open-source models for a more cost-effective and customized solution.",
+              "Cost Savings": "Reduce content creation time by 50%, saving approximately 10-20 hours of work per week. Increase conversion rates by 5-10% through personalized recommendations, leading to a revenue increase.",
+              "Considerations": "Prioritize data security and privacy when using customer data for training or personalization. Regularly update the model with new product information."
+            },
+            {
+              "Area": "Inventory Management and Demand Forecasting",
+              "Action": "Implement an AI-powered inventory management system (e.g., from a provider like StockIQ or custom model) that analyzes sales data, seasonality, and other factors to predict demand and optimize inventory levels.",
+              "Cost Savings": "Reduce inventory holding costs by 10-15% and reduce waste through better demand forecasting. Improve the efficiency and reduce labor costs.",
+              "Considerations": "Integrate the inventory management system with existing e-commerce and logistics platforms. Ensure data accuracy and regularly update the model to account for changing market trends."
+            },
+            {
+              "Area": "Marketing and Advertising Optimization",
+              "Action": "Integrate AI marketing tools (e.g., from providers like Hubspot or custom models) to target the audience. Analyze the user's data and personalize the marketing campaigns, ensuring ROI.",
+              "Cost Savings": "Reduce the cost of marketing campaigns. And increase the return on investment.",
+              "Considerations": "Prioritize data security and privacy when using customer data for training or personalization. Regularly update the model with new user information."
+            },
+            {
+              "Area": "Fraud Detection",
+              "Action": "Integrate AI-powered security tools to prevent any kind of fraud and protect customer data. This helps in the long run. (e.g., from providers like Sift or custom models) to prevent fraud.",
+              "Cost Savings": "Reduce the fraudulent orders and the chargebacks.",
+              "Considerations": "Prioritize the data security and protect the data. Regularly update the model with new security and fraud parameters."
+            }
           ],
-          success_metrics: {
-            'Customer Satisfaction': { target: '95%', current: '78%' },
-            'Operational Efficiency': { target: '40%', current: '15%' },
-            'Revenue Growth': { target: '25%', current: '8%' },
-            'Cost Reduction': { target: '30%', current: '5%' }
-          },
+          "Quick Wins": [
+            {
+              "Optimization": "Enhance existing automated email responses by including more personalized product recommendations based on customer browsing history or past purchases.",
+              "Effort": "Low",
+              "Benefit": "Increased customer engagement and potential sales."
+            },
+            {
+              "Optimization": "Use AI tools to generate variations of existing ad copy to test which performs better on platforms like Google Ads or Facebook Ads.",
+              "Effort": "Low",
+              "Benefit": "Improved click-through rates and lower advertising costs."
+            },
+            {
+              "Optimization": "Employ AI for competitor analysis to identify new products or marketing trends.",
+              "Effort": "Low",
+              "Benefit": "Gaining the market insights and competitive advantage."
+            }
+          ],
           raw_response: data.response || "Blueprint generated successfully based on your business requirements."
         };
 
-        setBlueprintData(mockBlueprintData);
+        setBlueprintData(structuredBlueprintData);
       } catch (err) {
         console.error('Error generating blueprint:', err);
         setError('Cosmic Anomaly Detected! Unable to generate blueprint. Please try again or contact mission control.');
@@ -233,121 +285,119 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           </div>
         </div>
 
-        {/* Blueprint Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <h3 className="text-lg font-semibold text-blue-100 mb-2">Total Investment</h3>
-              <p className="text-3xl font-bold text-green-400">{blueprintData?.executive_summary?.investment}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <h3 className="text-lg font-semibold text-blue-100 mb-2">Timeline</h3>
-              <p className="text-3xl font-bold text-purple-400">{blueprintData?.executive_summary?.timeline}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <h3 className="text-lg font-semibold text-blue-100 mb-2">ROI Projection</h3>
-              <p className="text-3xl font-bold text-teal-400">{blueprintData?.executive_summary?.roi_projection}</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Budget Breakdown */}
+        {/* Business Analysis Overview */}
         <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
           <CardHeader>
             <CardTitle className="text-blue-100 flex items-center gap-2">
               <Star className="w-5 h-5" />
-              Budget Constellation
+              Business Analysis Overview
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={blueprintData?.budget?.breakdown}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {blueprintData?.budget?.breakdown?.map((entry: any, index: number) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value: any) => `$${value.toLocaleString()}`} />
-                </PieChart>
-              </ResponsiveContainer>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Object.entries(blueprintData['Business Analysis']).map(([key, value]) => (
+                <div key={key} className="p-4 bg-gray-800/50 rounded-lg">
+                  <h4 className="text-blue-100 font-semibold mb-2">{key}</h4>
+                  <p className="text-gray-300 text-sm">{value as string}</p>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Timeline Roadmap */}
+        {/* AI Opportunities */}
+        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
+          <CardHeader>
+            <CardTitle className="text-blue-100 flex items-center gap-2">
+              <Target className="w-5 h-5" />
+              AI Opportunities Constellation
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {blueprintData.Opportunities.map((opportunity: any, index: number) => (
+                <div key={index} className="p-6 bg-gray-800/50 rounded-lg border border-purple-500/20">
+                  <h3 className="text-lg font-semibold text-purple-300 mb-3">{opportunity.Category}</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-sm font-medium text-blue-200 mb-1">Justification</h4>
+                      <p className="text-gray-300 text-sm">{opportunity.Justification}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-blue-200 mb-1">Workflow Analysis</h4>
+                      <p className="text-gray-300 text-sm">{opportunity['Workflow Analysis']}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-blue-200 mb-1">Cost-Benefit</h4>
+                      <p className="text-gray-300 text-sm">{opportunity['Cost-Benefit']}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-red-300 mb-1">Sensitive Data Exposure</h4>
+                      <p className="text-gray-300 text-sm">{opportunity['Sensitive Data Exposure']}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Recommendations */}
         <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
           <CardHeader>
             <CardTitle className="text-blue-100 flex items-center gap-2">
               <Rocket className="w-5 h-5" />
-              Mission Timeline
+              Strategic Recommendations
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {blueprintData?.timeline?.phases?.map((phase: any, index: number) => (
-                <div key={index} className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                    {index + 1}
+            <div className="space-y-6">
+              {blueprintData.Recommendations.map((rec: any, index: number) => (
+                <div key={index} className="p-6 bg-gray-800/50 rounded-lg border-l-4 border-green-500">
+                  <h3 className="text-lg font-semibold text-green-300 mb-3">{rec.Area}</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-sm font-medium text-blue-200 mb-1">Action Plan</h4>
+                      <p className="text-gray-300 text-sm">{rec.Action}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-green-200 mb-1">Cost Savings</h4>
+                      <p className="text-gray-300 text-sm">{rec['Cost Savings']}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-yellow-200 mb-1">Considerations</h4>
+                      <p className="text-gray-300 text-sm">{rec.Considerations}</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-blue-100 font-semibold">{phase.phase}</h4>
-                    <p className="text-gray-300">{phase.task}</p>
-                  </div>
-                  <div className="text-purple-300 font-medium">{phase.duration}</div>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Technology Roadmap */}
+        {/* Quick Wins */}
         <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
           <CardHeader>
             <CardTitle className="text-blue-100 flex items-center gap-2">
-              <Shield className="w-5 h-5" />
-              Technology Arsenal
+              <TrendingUp className="w-5 h-5" />
+              Quick Wins - Immediate Actions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {blueprintData?.technology_roadmap?.map((tech: string, index: number) => (
-                <div key={index} className="flex items-center gap-3 p-4 bg-gray-800/50 rounded-lg">
-                  <Star className="w-5 h-5 text-teal-400" />
-                  <span className="text-gray-200">{tech}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Success Metrics */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
-          <CardHeader>
-            <CardTitle className="text-blue-100">Success Constellation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {blueprintData?.success_metrics && Object.entries(blueprintData.success_metrics).map(([key, value]: [string, any]) => (
-                <div key={key} className="p-4 bg-gray-800/50 rounded-lg">
-                  <h4 className="text-blue-100 font-semibold mb-2">{key}</h4>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-300">Current: {value.current}</span>
-                    <span className="text-green-400 font-bold">Target: {value.target}</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {blueprintData['Quick Wins'].map((win: any, index: number) => (
+                <div key={index} className="p-4 bg-gradient-to-br from-teal-900/50 to-green-900/50 rounded-lg border border-teal-500/30">
+                  <div className="flex items-center justify-between mb-3">
+                    <Lightbulb className="w-5 h-5 text-teal-300" />
+                    <span className={`px-2 py-1 text-xs rounded-full ${
+                      win.Effort === 'Low' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'
+                    }`}>
+                      {win.Effort} Effort
+                    </span>
                   </div>
+                  <h4 className="text-teal-100 font-medium mb-2">Quick Win #{index + 1}</h4>
+                  <p className="text-gray-300 text-sm mb-2">{win.Optimization}</p>
+                  <p className="text-green-300 text-xs font-medium">Benefit: {win.Benefit}</p>
                 </div>
               ))}
             </div>
