@@ -1,9 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface BlueprintResultsProps {
   questionnaireData: QuestionnaireData;
@@ -426,7 +426,7 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
         </Card>
 
         {/* Quick Wins */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
+        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-blue-100 flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
@@ -451,18 +451,6 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-
-        {/* AI Response */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-blue-100">Cosmic Intelligence Report</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
-              {blueprintData?.raw_response}
-            </p>
           </CardContent>
         </Card>
       </div>
