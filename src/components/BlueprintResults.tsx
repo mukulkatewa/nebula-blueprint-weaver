@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Star, Download, Rocket, Shield, Target, Lightbulb, TrendingUp, Building2, Zap, DollarSign, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import { QuestionnaireData } from '../pages/Index';
 
 interface BlueprintResultsProps {
@@ -294,96 +293,142 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
   console.log('✨ Rendering blueprint results with data:', blueprintData);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background stars */}
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950">
+      {/* Enhanced background with animated elements */}
       <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
+        {[...Array(40)].map((_, i) => (
           <div
             key={i}
-            className="absolute animate-pulse"
+            className="absolute animate-pulse opacity-30"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
             }}
           >
-            <Star className="w-1 h-1 text-blue-200 fill-current" />
+            <Star className="w-1 h-1 text-blue-300 fill-current" />
           </div>
         ))}
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Your AI Blueprint Galaxy
+      {/* Floating gradient orbs */}
+      <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/10 rounded-full blur-xl animate-float"></div>
+      <div className="absolute bottom-40 right-32 w-24 h-24 bg-purple-500/10 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-teal-500/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }}></div>
+
+      <div className="relative z-10 container mx-auto px-6 py-12 max-w-7xl">
+        {/* Enhanced Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full backdrop-blur-sm border border-blue-400/30">
+            <Star className="w-6 h-6 text-blue-300" />
+            <span className="text-blue-200 font-medium">AI Blueprint Generated</span>
+            <Star className="w-6 h-6 text-purple-300" />
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-300 via-purple-300 to-teal-300 bg-clip-text text-transparent">
+            Your AI Galaxy
           </h1>
-          <p className="text-blue-100 text-lg mb-6">
-            Your cosmic business transformation roadmap has been generated
+          <p className="text-xl text-blue-100/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+            A comprehensive blueprint for transforming your business with artificial intelligence
           </p>
           
-          <div className="flex justify-center gap-4 mb-8">
-            <Button onClick={onBack} variant="outline" className="border-blue-500/50 text-blue-200 hover:bg-blue-500/20">
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <Button 
+              onClick={onBack} 
+              variant="outline" 
+              className="border-blue-400/50 text-blue-200 hover:bg-blue-500/20 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               New Journey
             </Button>
-            <Button onClick={downloadBlueprint} className="bg-gradient-to-r from-blue-600 to-purple-600">
+            <Button 
+              onClick={downloadBlueprint} 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
               <Download className="w-4 h-4 mr-2" />
               Download Blueprint
             </Button>
           </div>
         </div>
 
-        {/* Business Analysis Overview */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
-          <CardHeader>
-            <CardTitle className="text-blue-100 flex items-center gap-2">
-              <Star className="w-5 h-5" />
-              Business Analysis Overview
+        {/* Business Analysis Overview - Enhanced */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-blue-400/30 backdrop-blur-lg mb-12 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-2xl text-blue-100 flex items-center gap-3">
+              <div className="p-2 bg-blue-500/20 rounded-lg">
+                <Building2 className="w-6 h-6 text-blue-300" />
+              </div>
+              Business Intelligence Overview
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Object.entries(blueprintData['Business Analysis']).map(([key, value]) => (
-                <div key={key} className="p-4 bg-gray-800/50 rounded-lg">
-                  <h4 className="text-blue-100 font-semibold mb-2">{key}</h4>
-                  <p className="text-gray-300 text-sm">{value as string}</p>
+                <div key={key} className="group p-6 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl border border-slate-600/50 hover:border-blue-400/50 transition-all duration-300 hover:scale-105">
+                  <h4 className="text-blue-200 font-semibold mb-3 text-lg">{key}</h4>
+                  <p className="text-gray-300 leading-relaxed">{value as string}</p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* AI Opportunities */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
-          <CardHeader>
-            <CardTitle className="text-blue-100 flex items-center gap-2">
-              <Target className="w-5 h-5" />
+        {/* AI Opportunities - Enhanced */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-purple-400/30 backdrop-blur-lg mb-12 shadow-2xl hover:shadow-purple-500/25 transition-all duration-300">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-2xl text-purple-100 flex items-center gap-3">
+              <div className="p-2 bg-purple-500/20 rounded-lg">
+                <Target className="w-6 h-6 text-purple-300" />
+              </div>
               AI Opportunities Constellation
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
               {blueprintData.Opportunities.map((opportunity: any, index: number) => (
-                <div key={index} className="p-6 bg-gray-800/50 rounded-lg border border-purple-500/20">
-                  <h3 className="text-lg font-semibold text-purple-300 mb-3">{opportunity.Category}</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="text-sm font-medium text-blue-200 mb-1">Justification</h4>
-                      <p className="text-gray-300 text-sm">{opportunity.Justification}</p>
+                <div key={index} className="group relative p-8 bg-gradient-to-br from-purple-900/30 to-slate-800/50 rounded-2xl border border-purple-400/30 hover:border-purple-300/60 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+                  {/* Category header with icon */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-purple-500/20 rounded-lg">
+                      <Zap className="w-5 h-5 text-purple-300" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-blue-200 mb-1">Workflow Analysis</h4>
-                      <p className="text-gray-300 text-sm">{opportunity['Workflow Analysis']}</p>
+                    <h3 className="text-xl font-bold text-purple-200">{opportunity.Category}</h3>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div className="p-4 bg-slate-700/30 rounded-lg">
+                      <h4 className="text-sm font-medium text-blue-300 mb-2 flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        Justification
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">{opportunity.Justification}</p>
                     </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-blue-200 mb-1">Cost-Benefit</h4>
-                      <p className="text-gray-300 text-sm">{opportunity['Cost-Benefit']}</p>
+                    
+                    <div className="p-4 bg-slate-700/30 rounded-lg">
+                      <h4 className="text-sm font-medium text-teal-300 mb-2 flex items-center gap-2">
+                        <Target className="w-4 h-4" />
+                        Workflow Analysis
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">{opportunity['Workflow Analysis']}</p>
                     </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-red-300 mb-1">Sensitive Data Exposure</h4>
-                      <p className="text-gray-300 text-sm">{opportunity['Sensitive Data Exposure']}</p>
+                    
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 bg-green-900/20 rounded-lg border border-green-500/30">
+                        <h4 className="text-sm font-medium text-green-300 mb-2 flex items-center gap-2">
+                          <DollarSign className="w-4 h-4" />
+                          Cost-Benefit
+                        </h4>
+                        <p className="text-gray-300 text-sm leading-relaxed">{opportunity['Cost-Benefit']}</p>
+                      </div>
+                      
+                      <div className="p-4 bg-red-900/20 rounded-lg border border-red-500/30">
+                        <h4 className="text-sm font-medium text-red-300 mb-2 flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4" />
+                          Data Exposure Risk
+                        </h4>
+                        <p className="text-gray-300 text-sm leading-relaxed">{opportunity['Sensitive Data Exposure']}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -392,31 +437,53 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           </CardContent>
         </Card>
 
-        {/* Recommendations */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm mb-8">
-          <CardHeader>
-            <CardTitle className="text-blue-100 flex items-center gap-2">
-              <Rocket className="w-5 h-5" />
-              Strategic Recommendations
+        {/* Strategic Recommendations - Enhanced */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-green-400/30 backdrop-blur-lg mb-12 shadow-2xl hover:shadow-green-500/25 transition-all duration-300">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-2xl text-green-100 flex items-center gap-3">
+              <div className="p-2 bg-green-500/20 rounded-lg">
+                <Rocket className="w-6 h-6 text-green-300" />
+              </div>
+              Strategic Implementation Roadmap
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {blueprintData.Recommendations.map((rec: any, index: number) => (
-                <div key={index} className="p-6 bg-gray-800/50 rounded-lg border-l-4 border-green-500">
-                  <h3 className="text-lg font-semibold text-green-300 mb-3">{rec.Area}</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="text-sm font-medium text-blue-200 mb-1">Action Plan</h4>
-                      <p className="text-gray-300 text-sm">{rec.Action}</p>
+                <div key={index} className="group relative p-8 bg-gradient-to-r from-green-900/20 to-slate-800/50 rounded-2xl border-l-4 border-green-400 hover:border-green-300 transition-all duration-300 hover:scale-[1.01] shadow-lg">
+                  {/* Area header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-green-500/20 rounded-lg">
+                      <Rocket className="w-5 h-5 text-green-300" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-green-200 mb-1">Cost Savings</h4>
-                      <p className="text-gray-300 text-sm">{rec['Cost Savings']}</p>
+                    <h3 className="text-xl font-bold text-green-200">{rec.Area}</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2 space-y-4">
+                      <div className="p-4 bg-slate-700/30 rounded-lg">
+                        <h4 className="text-sm font-medium text-blue-300 mb-2 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          Action Plan
+                        </h4>
+                        <p className="text-gray-300 text-sm leading-relaxed">{rec.Action}</p>
+                      </div>
+                      
+                      <div className="p-4 bg-yellow-900/20 rounded-lg border border-yellow-500/30">
+                        <h4 className="text-sm font-medium text-yellow-300 mb-2 flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4" />
+                          Key Considerations
+                        </h4>
+                        <p className="text-gray-300 text-sm leading-relaxed">{rec.Considerations}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-yellow-200 mb-1">Considerations</h4>
-                      <p className="text-gray-300 text-sm">{rec.Considerations}</p>
+                    
+                    <div className="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl border border-green-400/30">
+                      <h4 className="text-sm font-medium text-green-300 mb-3 flex items-center gap-2">
+                        <DollarSign className="w-4 h-4" />
+                        Expected Savings
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed font-medium">{rec['Cost Savings']}</p>
                     </div>
                   </div>
                 </div>
@@ -425,29 +492,49 @@ Please provide a comprehensive AI implementation blueprint for this business.`;
           </CardContent>
         </Card>
 
-        {/* Quick Wins */}
-        <Card className="bg-gray-900/80 border-blue-500/30 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-blue-100 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
+        {/* Quick Wins - Enhanced */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-teal-400/30 backdrop-blur-lg shadow-2xl hover:shadow-teal-500/25 transition-all duration-300">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-2xl text-teal-100 flex items-center gap-3">
+              <div className="p-2 bg-teal-500/20 rounded-lg">
+                <TrendingUp className="w-6 h-6 text-teal-300" />
+              </div>
               Quick Wins - Immediate Actions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {blueprintData['Quick Wins'].map((win: any, index: number) => (
-                <div key={index} className="p-4 bg-gradient-to-br from-teal-900/50 to-green-900/50 rounded-lg border border-teal-500/30">
-                  <div className="flex items-center justify-between mb-3">
-                    <Lightbulb className="w-5 h-5 text-teal-300" />
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      win.Effort === 'Low' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'
-                    }`}>
-                      {win.Effort} Effort
-                    </span>
+                <div key={index} className="group relative p-6 bg-gradient-to-br from-teal-900/30 to-emerald-900/30 rounded-2xl border border-teal-400/30 hover:border-teal-300/60 transition-all duration-300 hover:scale-105 shadow-lg">
+                  {/* Header with effort indicator */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-teal-500/20 rounded-lg">
+                      <Lightbulb className="w-5 h-5 text-teal-300" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-teal-300" />
+                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                        win.Effort === 'Low' 
+                          ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                          : 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                      }`}>
+                        {win.Effort} Effort
+                      </span>
+                    </div>
                   </div>
-                  <h4 className="text-teal-100 font-medium mb-2">Quick Win #{index + 1}</h4>
-                  <p className="text-gray-300 text-sm mb-2">{win.Optimization}</p>
-                  <p className="text-green-300 text-xs font-medium">Benefit: {win.Benefit}</p>
+                  
+                  <h4 className="text-lg font-semibold text-teal-100 mb-3">Quick Win #{index + 1}</h4>
+                  
+                  <div className="space-y-3">
+                    <div className="p-3 bg-slate-700/30 rounded-lg">
+                      <p className="text-gray-300 text-sm leading-relaxed">{win.Optimization}</p>
+                    </div>
+                    
+                    <div className="p-3 bg-green-900/20 rounded-lg border border-green-500/30">
+                      <h5 className="text-xs font-medium text-green-300 mb-1">Expected Benefit</h5>
+                      <p className="text-green-200 text-sm font-medium">{win.Benefit}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
