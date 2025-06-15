@@ -57,6 +57,7 @@
     @apply bg-background text-foreground;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f0f23 50%, #000000 100%);
     min-height: 100vh;
+    font-family: 'Orbitron', sans-serif;
   }
 
   /* Cosmic scrollbar */
