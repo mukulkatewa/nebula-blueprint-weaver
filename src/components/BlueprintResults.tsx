@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BusinessAnalysisTab } from './business-analysis/BusinessAnalysisTab';
@@ -7,10 +6,11 @@ import { CostBreakdownTab } from './business-analysis/CostBreakdownTab';
 import { SwotAnalysisTab } from './business-analysis/SwotAnalysisTab';
 
 interface BlueprintResultsProps {
-  userAnswers: any;
+  questionnaireData: any;
+  onBack: () => void;
 }
 
-const BlueprintResults: React.FC<BlueprintResultsProps> = ({ userAnswers }) => {
+const BlueprintResults: React.FC<BlueprintResultsProps> = ({ questionnaireData, onBack }) => {
   const [activeTab, setActiveTab] = useState('blueprint');
   const [blueprintData, setBlueprintData] = useState<any>(null);
   const [roadmapData, setRoadmapData] = useState<any>(null);
@@ -41,7 +41,7 @@ const BlueprintResults: React.FC<BlueprintResultsProps> = ({ userAnswers }) => {
           user_id: "katewamukul@gmail.com",
           agent_id: "684c1a21e5203d8a7b64cd83",
           session_id: "684c1a21e5203d8a7b64cd83-ubao3y0iskp",
-          message: JSON.stringify(userAnswers)
+          message: JSON.stringify(questionnaireData)
         })
       });
       const data = await response.json();
