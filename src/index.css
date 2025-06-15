@@ -16,8 +16,8 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary: 254 81% 62%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -33,7 +33,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 217.2 91.2% 59.8%;
+    --ring: 254 81% 62%;
 
     --radius: 0.75rem;
 
@@ -55,7 +55,7 @@
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f0f23 50%, #000000 100%);
+    background: linear-gradient(135deg, #052e16 0%, #1e1b4b 50%, #000000 100%);
     min-height: 100vh;
   }
 
@@ -70,27 +70,27 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+    background: linear-gradient(to bottom, #22c55e, #8b5cf6);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #2563eb, #7c3aed);
+    background: linear-gradient(to bottom, #16a34a, #7c3aed);
   }
 }
 
 @layer components {
   .cosmic-glow {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
     transition: box-shadow 0.3s ease;
   }
 
   .cosmic-glow:hover {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
   }
 
   .nebula-text {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+    background: linear-gradient(135deg, #4ade80, #8b5cf6, #22c55e);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -125,3 +125,4 @@
 .twinkle:nth-child(4n) {
   animation-delay: 1.5s;
 }
+
