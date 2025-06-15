@@ -37,7 +37,7 @@ const Index = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black">
       {currentStep === 'landing' && (
         <LandingPage onStartJourney={handleStartJourney} />
       )}

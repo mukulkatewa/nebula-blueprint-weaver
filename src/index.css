@@ -7,44 +7,44 @@
 
 @layer base {
   :root {
-    --background: 224 71% 4%; /* A very dark blue */
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 224 71% 4%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 224 71% 4%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 100% 56%; /* A bright cyan/blue */
-    --primary-foreground: 224 71% 4%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
 
-    --secondary: 224 71% 10%; /* A darker blue */
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 224 71% 10%;
+    --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 224 71% 10%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 17%; /* A muted blue-gray for borders */
-    --input: 217 33% 17%;
-    --ring: 210 100% 56%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 217.2 91.2% 59.8%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 224 71% 4%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 210 100% 56%;
-    --sidebar-primary-foreground: 224 71% 4%;
-    --sidebar-accent: 224 71% 10%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 210 100% 56%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -55,13 +55,11 @@
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #134e4a 100%);
-    background-size: 200% 200%;
-    animation: animated-gradient 15s ease infinite;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f0f23 50%, #000000 100%);
     min-height: 100vh;
   }
 
-  /* Professional scrollbar */
+  /* Cosmic scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -72,27 +70,27 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #a855f7, #22c55e);
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #9333ea, #16a34a);
+    background: linear-gradient(to bottom, #2563eb, #7c3aed);
   }
 }
 
 @layer components {
   .cosmic-glow {
-    box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     transition: box-shadow 0.3s ease;
   }
 
   .cosmic-glow:hover {
-    box-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
   }
 
   .nebula-text {
-    background: linear-gradient(135deg, #3b82f6, #93c5fd, #60a5fa);
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -103,18 +101,6 @@
   @keyframes nebula-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
-  }
-
-  @keyframes animated-gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 }
 
