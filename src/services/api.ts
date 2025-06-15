@@ -16,44 +16,92 @@ export interface Blueprint {
   };
 }
 
-// Mock API function
+// IMPORTANT: Replace with your actual Perplexity API key.
+// Storing API keys in frontend code is not secure for production applications.
+// For development, you can paste your key here. For production, consider using a secure method
+// like a backend proxy or a service like Supabase Secrets.
+const PPLX_API_KEY = "YOUR_PERPLEXITY_API_KEY_HERE";
+
+// API function to generate blueprint from an AI service
 export const generateBlueprint = async (data: QuestionnaireData): Promise<Blueprint> => {
   console.log("Generating blueprint for:", data);
 
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
+  if (!PPLX_API_KEY || PPLX_API_KEY === "YOUR_PERPLEXITY_API_KEY_HERE") {
+    console.error("Perplexity API key is not set. Please update it in src/services/api.ts");
+    throw new Error("Perplexity API key is not configured. Please add your key to src/services/api.ts to generate a blueprint.");
+  }
 
-  // In a real application, this would be a fetch call to a backend API.
-  // For now, we return mock data to demonstrate the flow.
-  const mockBlueprint: Blueprint = {
-    businessAnalysis: "Based on your input, your business is a small e-commerce platform specializing in handmade crafts. There's a significant opportunity for growth by leveraging AI.",
-    opportunities: [
-      "Implement an AI-powered chatbot for 24/7 customer support.",
-      "Use AI for personalized product recommendations.",
-      "Automate inventory management with predictive AI."
-    ],
-    recommendations: [
-      "Start with a customer service chatbot to reduce response times.",
-      "Integrate a recommendation engine on your product pages.",
-      "Explore AI-driven marketing campaign optimization."
-    ],
-    roadmap: [
-      { phase: "Phase 1 (0-3 Months)", description: "Deploy customer service chatbot. Gather data on customer interactions." },
-      { phase: "Phase 2 (3-6 Months)", description: "Implement personalized recommendation engine. Analyze impact on sales." },
-      { phase: "Phase 3 (6-12 Months)", description: "Develop and integrate AI for inventory and supply chain management." }
-    ],
-    costBreakdown: [
-      { item: "Chatbot Service (Subscription)", cost: "$100/month" },
-      { item: "Recommendation Engine (API)", cost: "$250/month" },
-      { item: "Development & Integration", cost: "$2000 (one-time)" }
-    ],
+  const prompt = `
+  Based on the following business information, generate a detailed AI integration blueprint.
+  
+  Business Overview: ${data.businessOverview}
+  Current AI Tools: ${data.currentAITools}
+  Desired AI Usage Areas: ${data.aiUsageAreas}
+  AI Spending Budget: ${data.aiSpending}
+  Most Effective AI Tools So Far: ${data.effectiveAITools}
+  Technology Infrastructure: ${data.technologyInfrastructure}
+  Team Members for AI projects: ${data.aiTeamMembers}
+  Handling of Sensitive Information: ${data.sensitiveInformation}
+  Compliance Requirements: ${data.complianceRequirements}
+
+  Please provide a response in a valid, raw JSON format, without any introductory text, comments, or code block formatting like \`\`\`json. The JSON object should strictly adhere to the following TypeScript interface:
+
+  export interface Blueprint {
+    businessAnalysis: string;
+    opportunities: string[];
+    recommendations: string[];
+    roadmap: { phase: string; description: string; }[];
+    costBreakdown: { item: string; cost: string; }[];
     swotAnalysis: {
-      strengths: ["Unique handmade products", "Established customer base"],
-      weaknesses: ["Limited marketing budget", "Manual inventory process"],
-      opportunities: ["AI-powered personalization", "Expanding into new markets"],
-      threats: ["Competition from larger platforms", "Changing customer preferences"]
-    }
-  };
+      strengths: string[];
+      weaknesses: string[];
+      opportunities: string[];
+      threats: string[];
+    };
+  }
 
-  return mockBlueprint;
+  Generate concise but insightful content for each field based on the provided business information. Ensure all fields are populated.
+  `;
+
+  const response = await fetch('https://api.perplexity.ai/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${PPLX_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'llama-3.1-sonar-large-128k-online',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert AI strategy consultant. Your task is to generate a single, raw JSON object based on user input, following a strict schema. Do not include any extra text, explanations, or markdown formatting.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.7,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error("Perplexity API Error:", errorBody);
+    throw new Error(`API request failed: ${response.statusText} - ${errorBody}`);
+  }
+
+  const result = await response.json();
+  const content = result.choices[0].message.content;
+
+  try {
+    // The AI might still occasionally wrap the JSON in markdown, so we clean it just in case.
+    const cleanedContent = content.replace(/```json\n?/g, '').replace(/\n?```/g, '').trim();
+    const blueprint: Blueprint = JSON.parse(cleanedContent);
+    return blueprint;
+  } catch (e) {
+    console.error("Failed to parse blueprint JSON:", e);
+    console.error("Received content from API:", content);
+    throw new Error("Failed to parse the AI-generated blueprint. The format was invalid.");
+  }
 };
